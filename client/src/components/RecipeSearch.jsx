@@ -13,7 +13,7 @@ const RecipeSearch = () => {
  const [recipeResults, setRecipeResults] = useContext(RecipeResultsContext);
 
  const [tagTypes, setTagTypes] = useState([]);
- const [selectedType, setSelectedType] = useState(0);
+ const [selectedType, setSelectedType] = useState(-1);
  const [selectedTag, setSelectedTag] = useState('');
 
  useEffect(() => {

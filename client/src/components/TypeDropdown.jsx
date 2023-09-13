@@ -31,13 +31,12 @@ const TypeDropdown = () => {
         {mappedTypeArray.map((item, index) => <option value={index}>{item.type}</option>)}
       </select>
       <label htmlFor="tag">Choose a tag:</label>
-      {selectedType >= 0 ? (
+      {selectedType !== -1 ? (
         <select name="tag" id="tag" onChange={(e)=>{setSelectedTag(e.target.value)}} value={selectedTag}>
           <option value={''}>none</option>
           {mappedTypeArray[selectedType].tags.map((tag, index) => <option value={tag.name}>{tag.display_name}</option>)}
         </select>)
       :  null}
-
 
     </div>
   )
