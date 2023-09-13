@@ -15,7 +15,6 @@ const App = () => {
   const [page, setPage] = useState('home');
   const [recipeIndex, setRecipeIndex] = useState(-1);
 
-
   useEffect(() => {
     // This function will run whenever recipeResults changes.
     console.log('page has been updated:', page);
@@ -37,9 +36,6 @@ const App = () => {
       <RecipeIndexContext.Provider value={[
         recipeIndex, setRecipeIndex
       ]}>
-
-
-
         <h1>Food with Friends</h1>
         {page === 'home' ? <RecipeSearch/> : null }
 
@@ -51,6 +47,6 @@ const App = () => {
       </FoodQueryContext.Provider>
     </div>
   )
-  }
+}
 
 export default App;

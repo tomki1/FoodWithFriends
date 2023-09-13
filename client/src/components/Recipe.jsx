@@ -10,8 +10,30 @@ const Recipe = () => {
 
   return (
     <div>
-      <h2>Recipe</h2>
-      {recipeResults[recipeIndex].name}
+      <button onClick={() => {
+        setPage('home');
+        setRecipeIndex(-1);
+      }}>
+        back to recipe list
+      </button>
+      <button onClick={() => {
+      }}>
+        select recipe
+      </button>
+      <h2>{recipeResults[recipeIndex].name}</h2>
+      <img src={recipeResults[recipeIndex].thumbnail_url} alt={recipeResults[recipeIndex].name} style={{maxWidth:'500px', maxHeight:'400px'}}></img>
+      <p>Ingredients:</p>
+      <ul>
+        {recipeResults[recipeIndex].sections[0].components.map((recipeIngredients, i) => (
+          <li key={i}>{recipeIngredients.ingredient.name}</li>
+        ))}
+      </ul>
+      <p>Instructions:</p>
+      <ol>
+        {recipeResults[recipeIndex].instructions.map((instruction, i) => (
+          <li key={i}>{instruction.display_text}</li>
+        ))}
+      </ol>
     </div>
   )
 }
