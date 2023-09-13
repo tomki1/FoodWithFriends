@@ -4,8 +4,6 @@ const axios = require('axios');
 module.exports = {
 
   async getRecipes(req, res) {
-    console.log("foodname", req.query.foodName)
-    console.log("selectedTag", req.query.selectedTag)
     const options = {
       method: 'GET',
       url: 'https://tasty.p.rapidapi.com/recipes/list',
