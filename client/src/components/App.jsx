@@ -8,6 +8,7 @@ export const RecipeResultsContext = React.createContext();
 export const TogglePageContext = React.createContext();
 export const RecipeIndexContext = React.createContext();
 
+
 const App = () => {
 
   const [foodQuery, setFoodQuery] = useState('');
@@ -16,10 +17,7 @@ const App = () => {
   const [recipeIndex, setRecipeIndex] = useState(-1);
 
   useEffect(() => {
-    // This function will run whenever recipeResults changes.
     console.log('page has been updated:', page);
-
-    // You can perform any additional actions here based on the updated recipeResults.
   }, [page]);
 
   return (
