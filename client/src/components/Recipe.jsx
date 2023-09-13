@@ -20,20 +20,38 @@ const Recipe = () => {
       }}>
         select recipe
       </button>
-      <h2>{recipeResults[recipeIndex].name}</h2>
-      <img src={recipeResults[recipeIndex].thumbnail_url} alt={recipeResults[recipeIndex].name} style={{maxWidth:'500px', maxHeight:'400px'}}></img>
+      <h2>{recipeResults[recipeIndex]?.name}</h2>
+      <img src={recipeResults[recipeIndex]?.thumbnail_url} alt={recipeResults[recipeIndex]?.name} style={{maxWidth:'500px', maxHeight:'400px'}}></img>
+
+
+      {recipeResults[recipeIndex].prep_time_minutes ?
+        <p>Prep Time: {recipeResults[recipeIndex].prep_time_minutes} minutes</p>
+      : <p>Prep Time: none listed</p>
+      }
+
+      {recipeResults[recipeIndex].cook_time_minutes ?
+        <p>Cook Time: {recipeResults[recipeIndex].cook_time_minutes} minutes</p>
+      : <p>Cook Time: none listed</p>
+      }
+
       <p>Ingredients:</p>
-      <ul>
-        {recipeResults[recipeIndex].sections[0].components.map((recipeIngredients, i) => (
-          <li key={i}>{recipeIngredients.ingredient.name}</li>
-        ))}
-      </ul>
+      {recipeResults[recipeIndex].sections[0] ?
+        <ul>
+          {recipeResults[recipeIndex].sections[0].components.map((recipeIngredients, i) => (
+            <li key={i}>{recipeIngredients.ingredient.name}</li>
+          ))}
+        </ul>
+      : <p>none listed</p>}
+
       <p>Instructions:</p>
-      <ol>
+      {recipeResults[recipeIndex].instructions ?
+        <ol>
         {recipeResults[recipeIndex].instructions.map((instruction, i) => (
           <li key={i}>{instruction.display_text}</li>
         ))}
       </ol>
+      : <p>none listed</p>}
+
     </div>
   )
 }
