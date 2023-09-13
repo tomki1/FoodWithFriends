@@ -4,23 +4,24 @@ const axios = require('axios');
 module.exports = {
 
   async getRecipes(req, res) {
-  //   const options = {
-  //     method: 'GET',
-  //     url: 'https://tasty.p.rapidapi.com/recipes/list',
-  //     params: {
-  //       from: '0',
-  //       size: '20',
-  //       tags: 'under_30_minutes',
-  //       q: `${req.query.foodName}`
-  //     },
-  //     headers: {
-  //       'X-RapidAPI-Key': `${process.env.TOKEN}`,
-  //       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
-  //     }
-  //   };
+    const options = {
+      method: 'GET',
+      url: 'https://tasty.p.rapidapi.com/recipes/list',
+      params: {
+        from: '0',
+        size: '20',
+        tags: 'under_30_minutes',
+        q: `${req.query.foodName}`
+      },
+      headers: {
+        'X-RapidAPI-Key': `${process.env.TOKEN}`,
+        'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+      }
+    };
 
-  //  axios(options)
-  //   .then((response) =>
+   axios(options)
+    .then((response) => {
+
     res.send({
       "count": 1518,
       "results": [
@@ -11614,9 +11615,13 @@ module.exports = {
           "cook_time_minutes": 5
         }
       ]});
-    // }))
-    // .catch ((error) => {
-    //   console.error(error);
-    // });
+  /*
+    res.send(response.data);
+     */
+    })
+    .catch ((error) => {
+      console.error(error);
+    });
   }
 }
+

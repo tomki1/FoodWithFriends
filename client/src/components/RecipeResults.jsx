@@ -7,6 +7,7 @@ const RecipeResults = () => {
 
   const [recipeResults, setRecipeResults] = useContext(RecipeResultsContext);
 
+
   useEffect(() => {
     // This function will run whenever recipeResults changes.
     console.log('recipeResults has been updated:', recipeResults);

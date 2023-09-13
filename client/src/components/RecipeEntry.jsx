@@ -15,6 +15,9 @@ const RecipeEntry = ({ index }) => {
     setShowDetails(!showDetails);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+}
 
   return (
     <div>
@@ -26,16 +29,18 @@ const RecipeEntry = ({ index }) => {
           <button onClick={() => {
             setPage('recipe');
             setRecipeIndex(index);
+            scrollToTop();
             }}>
-              view full page
+              view recipe
           </button>
+          <div>
+            <img src={recipeResults[index].thumbnail_url} alt={recipeResults[index].name} style={{maxWidth:'200px', maxHeight:'200px'}}></img>
+          </div>
+          {recipeResults[index].description ?
           <p>Description: {recipeResults[index].description}</p>
-          <p>Ingredients:</p>
-          <ul>
-            {recipeResults[index].sections[0].components.map((recipeIngredients, i) => (
-              <li key={i}>{recipeIngredients.ingredient.name}</li>
-            ))}
-          </ul>
+          : null}
+
+
 
         </div>
       )}
