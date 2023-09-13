@@ -15,6 +15,7 @@ const RecipeSearch = () => {
  const [tagTypes, setTagTypes] = useState([]);
  const [selectedType, setSelectedType] = useState(-1);
  const [selectedTag, setSelectedTag] = useState('');
+ const [isLoading, setIsLoading] = useState(true);
 
  useEffect(() => {
   console.log('recipeResults has been updated:', recipeResults);
@@ -37,6 +38,7 @@ const RecipeSearch = () => {
       .catch((error) => console.log('Error', error.message));
     }
 const getTypes = () => {
+  setIsLoading(true);
     const options = {
       method: 'GET',
       url: '/tags/types',
@@ -57,6 +59,7 @@ const getTypes = () => {
           getTypes();
         } else {
           setTagTypes(mappedTypes);
+          setIsLoading(false);
         }
       })
       .catch((error) => console.log('Error', error.message));
@@ -66,7 +69,7 @@ const getTypes = () => {
       if (Object.keys(tagTypes).length === 0) {
         getTypes();
       }
-    }, [tagTypes]);
+    }, [tagTypes, isLoading]);
 
   return (
     <div>
@@ -83,7 +86,8 @@ const getTypes = () => {
       <SelectedTagContext.Provider value={[
         selectedTag, setSelectedTag
       ]}>
-        <TypeDropdown/>
+        {isLoading === false ? <TypeDropdown/> : null}
+
       </SelectedTagContext.Provider>
       </SelectedTypeContext.Provider>
       </TagTypeContext.Provider>

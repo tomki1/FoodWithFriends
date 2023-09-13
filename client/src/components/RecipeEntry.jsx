@@ -22,7 +22,7 @@ const RecipeEntry = ({ index }) => {
   return (
     <div>
       <ul>
-        <p onClick={toggleDetails} style={{ cursor: 'pointer' }}>{recipeResults[index].name}</p>
+        <p onClick={toggleDetails} style={{ cursor: 'pointer' }}>{recipeResults[index]?.name}</p>
         {showDetails && (
         <div>
           <h3>Recipe Details:</h3>
@@ -34,7 +34,7 @@ const RecipeEntry = ({ index }) => {
               view recipe
           </button>
           <div>
-            <img src={recipeResults[index].thumbnail_url} alt={recipeResults[index].name} style={{maxWidth:'200px', maxHeight:'200px'}}></img>
+            <img src={recipeResults[index]?.thumbnail_url} alt={recipeResults[index]?.name} style={{maxWidth:'200px', maxHeight:'200px'}}></img>
           </div>
           {recipeResults[index].description ?
           <p>Description: {recipeResults[index].description}</p>
