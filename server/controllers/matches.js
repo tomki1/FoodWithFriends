@@ -35,13 +35,20 @@ module.exports = {
          user_id_1 = userResult2.rows[0].id;
       }
 
+      const find = await pool.query('SELECT * FROM match WHERE user_1_id = $1 AND user_2_id = $2 AND recipe_id = $3', [user_id_1, user_id_2, recipe_id]);
+
+      // this match is already in db, don't add again
+      if (find.rows.length > 0) {
+        return res.status(200).json({ message: 'a match is already in progress' });
+      }
+
       const insertResult = await pool.query('INSERT INTO match (recipe_id, recipe_name, user_1_id, user_2_id) VALUES ($1, $2, $3, $4)', [recipe_id, recipe_name, user_id_1, user_id_2]);
 
       console.log('match inserted');
       return res.status(201).json({ message: 'match inserted' });
     } catch (error) {
       console.error('Error:', error);
-      return res.status(500).json({ error: 'Error' });
+      return res.status(500).json({ message: 'Error' });
     }
   },
 
@@ -85,6 +92,21 @@ module.exports = {
     }
   },
 
+  async getAll(req, res) {
+
+    try {
+      const result = await pool.query('SELECT m.recipe_name as recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, m.likes_1 AS likes_1, m.likes_2 AS likes_2, m.recipe_id as recipe_id, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id');
+      // const imageBase64_1 = result.rows[0]?.user_1_photo;
+      // const imageBase64_2 = result.rows[0]?.user_2_photo;
+      // const username_1 = result.rows[0]?.username_1;
+      // const username_2 = result.rows[0]?.username_2;
+      res.status(200).send(result.rows);
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).send(error);
+    }
+  },
+
   async updateMatch(req, res) {
 
     const recipe_id = req.body.recipeID;
@@ -107,23 +129,26 @@ module.exports = {
 
       let user_id_1;
       let user_id_2;
-      let result;
       if (userResult1.rows[0].id < userResult2.rows[0].id) {
         // update photo 1
          user_id_1 = userResult1.rows[0].id;
          user_id_2 = userResult2.rows[0].id;
 
-        result = await pool.query('UPDATE match SET user_1_photo = $1 WHERE recipe_id = $2 AND user_1_id = $3 AND user_2_id = $4', [imageData, recipe_id, user_id_1, user_id_2]);
+        await pool.query('UPDATE match SET user_1_photo = $1 WHERE recipe_id = $2 AND user_1_id = $3 AND user_2_id = $4', [imageData, recipe_id, user_id_1, user_id_2]);
 
       } else {
         // update photo 2
          user_id_2 = userResult1.rows[0].id;
          user_id_1 = userResult2.rows[0].id;
-         result = await pool.query('UPDATE match SET user_2_photo = $1 WHERE recipe_id = $2 AND user_1_id = $3 AND user_2_id = $4', [imageData, recipe_id, user_id_1, user_id_2]);
+         await pool.query('UPDATE match SET user_2_photo = $1 WHERE recipe_id = $2 AND user_1_id = $3 AND user_2_id = $4', [imageData, recipe_id, user_id_1, user_id_2]);
       }
 
-      console.log("updated")
-      return res.status(200).send(result);
+        const result = await pool.query('SELECT m.recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id WHERE recipe_id = $1 AND user_1_id = $2 AND user_2_id = $3', [recipe_id, user_id_1, user_id_2]);
+        const imageBase64_1 = result.rows[0]?.user_1_photo;
+        const imageBase64_2 = result.rows[0]?.user_2_photo;
+        const username_1 = result.rows[0]?.username_1;
+        const username_2 = result.rows[0]?.username_2;
+        res.status(200).json({ imageData_1: imageBase64_1, imageData_2: imageBase64_2, username_1: username_1, username_2: username_2});
     } catch (error) {
       console.error('Error:', error);
       return res.status(500).json({ error: 'Error' });

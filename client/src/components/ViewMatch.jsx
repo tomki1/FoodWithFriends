@@ -21,7 +21,8 @@ const ViewMatch = () => {
   const [secondUser, setSecondUser] = useContext(SecondUserContext);
   const [recipeName, setRecipeName] = useContext(RecipeNameContext);
   const [selectedImage, setSelectedImage] = useState('');
-  // const [imageData, setImageData] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
 
   const getMatchData = () => {
@@ -40,8 +41,6 @@ const ViewMatch = () => {
     }
       axios(options)
       .then((response) => {
-        // setImageData(response.data);
-
         setMatchData(response.data);
       })
       .catch((error) => console.log('Error', error.message));
@@ -78,11 +77,34 @@ const ViewMatch = () => {
         axios(options)
         .then((response) => {
           setMatchData(response.data);
+          setSelectedImage('');
         })
         .catch((error) => console.log('Error', error.message));
 
     }
   }
+
+  const createMatch = () => {
+    setIsLoading(true);
+    const currentUser = sessionStorage.getItem('username');
+    const options = {
+      method: 'POST',
+      url: '/matches/add',
+      responseType: 'json',
+      params: {
+        recipeID,
+        secondUser,
+        currentUser,
+        recipeName
+      }
+    }
+      axios(options)
+      .then((response) => {
+        setMessage(response.data.message);
+        setIsLoading(false);
+      })
+      .catch((error) => setMessage(error.message));
+    }
 
   useEffect(() => {
     getMatchData();
@@ -90,8 +112,11 @@ const ViewMatch = () => {
   }, []);
 
   useEffect(() => {
-    console.log('matchData has been updated:', matchData);
-  }, [matchData]);
+    console.log("message change")
+  }, [matchData, message]);
+
+
+
   return (
     <div>
       <button onClick={() => {
@@ -114,9 +139,19 @@ const ViewMatch = () => {
       }}>
         Food Fight
       </button>
-      <h2>Ongoing Match</h2>
 
-      <table>
+      <h2>Match</h2>
+      {message}
+      <button onClick={() => {
+        createMatch();
+
+      }}>
+        Create Match
+      </button>
+
+      {isLoading ? null :
+      <>
+         <table>
       <thead>
         <tr>
           <th style={headerCellStyle}>Recipe Name</th>
@@ -138,6 +173,8 @@ const ViewMatch = () => {
       {selectedImage && <img src={selectedImage} alt={sessionStorage.getItem('username')} />}
       <button onClick={imageClickHandler}>Upload Image</button>
     </div>
+      </>}
+
     </div>
   )
 }

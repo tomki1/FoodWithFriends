@@ -34,28 +34,6 @@ const Fight = () => {
       .catch((error) => console.log('Error', error.message));
     }
 
-    const createMatch = () => {
-      setIsLoading(true);
-      const currentUser = sessionStorage.getItem('username');
-      const options = {
-        method: 'POST',
-        url: '/matches/add',
-        responseType: 'json',
-        params: {
-          recipeID,
-          secondUser,
-          currentUser,
-          recipeName
-        }
-      }
-        axios(options)
-        .then((response) => {
-          console.log(response.data);
-          setIsLoading(false);
-        })
-        .catch((error) => console.log('Error', error.message));
-      }
-
     useEffect(() => {
       getRecipe();
       console.log('recipeResults has been updated:', recipeResults);
@@ -87,11 +65,7 @@ const Fight = () => {
         Food Fight
       </button>
       <h2>Get Cooking!</h2>
-      <button onClick={() => {
-        createMatch();
-      }}>
-        Create Match
-      </button>
+
       <button onClick={() => {
         setPage('viewMatch');
       }}>
