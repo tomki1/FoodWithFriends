@@ -5,6 +5,7 @@ const axios = require('axios');
 module.exports = {
 
   async addUser(req, res) {
+    console.log(req.body);
     const username = req.body.username;
 
     pool.query('SELECT id FROM users WHERE username = $1', [username], (error, results) => {

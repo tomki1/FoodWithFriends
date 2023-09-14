@@ -19,7 +19,7 @@ const CreateSessionName = () => {
       method: 'POST',
       url: '/users/add',
       responseType: 'json',
-      body: {
+      data: {
         username: username
       }
     }
