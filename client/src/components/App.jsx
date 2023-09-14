@@ -32,6 +32,13 @@ const App = () => {
     console.log('page has been updated:', page);
   }, [page]);
 
+  useEffect(() => {
+    if (sessionStorage.getItem('username') === null) {
+      setPage('createUsername');
+    }
+  }, [page]);
+
+
   return (
     <div>
       <FoodQueryContext.Provider value={[

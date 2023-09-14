@@ -4,9 +4,9 @@ const axios = require('axios');
 module.exports = {
 
   async addRecipe(req, res) {
-    const recipe_id = req.query.id;
-    const recipe_name = req.query.name;
-    const username = req.query.username;
+    const recipe_id = req.body.id;
+    const recipe_name = req.body.name;
+    const username = req.body.username;
 
     pool.query('SELECT id FROM users WHERE username = $1', [username], (error, results) => {
       if (error) {

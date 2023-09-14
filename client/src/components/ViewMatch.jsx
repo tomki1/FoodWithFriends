@@ -91,7 +91,7 @@ const ViewMatch = () => {
       method: 'POST',
       url: '/matches/add',
       responseType: 'json',
-      params: {
+      body: {
         recipeID,
         secondUser,
         currentUser,
@@ -155,15 +155,19 @@ const ViewMatch = () => {
       <thead>
         <tr>
           <th style={headerCellStyle}>Recipe Name</th>
-          <th style={headerCellStyle}>{matchData.username_1}</th>
-          <th style={headerCellStyle}>{matchData.username_2}</th>
+          <th style={headerCellStyle}>{matchData?.username_1}</th>
+          <th style={headerCellStyle}>{matchData?.username_2}</th>
+          <th style={headerCellStyle}>Likes for {matchData?.username_1}</th>
+          <th style={headerCellStyle}>likes for {matchData?.username_2}</th>
         </tr>
         </thead>
         <tbody>
             <tr>
               <td style={cellStyle}>{recipeName}</td>
-              <td style={cellStyle}>     <img src={matchData?.imageData_1} alt="Recipe" /></td>
+              <td style={cellStyle}><img src={matchData?.imageData_1} alt="Recipe" /></td>
               <td style={cellStyle}><img src={matchData?.imageData_2} alt="Recipe" /></td>
+              <td style={cellStyle}>{matchData?.likes_1}</td>
+              <td style={cellStyle}>{matchData?.likes_2}</td>
             </tr>
         </tbody>
       </table>
