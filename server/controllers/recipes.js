@@ -14,13 +14,30 @@ module.exports = {
       } else {
         if (results.rows.length > 0) {
           const user_id = results.rows[0].id;
-          pool.query('INSERT INTO user_recipes (recipe_id, recipe_name, user_id) VALUES ($1, $2, $3)', [recipe_id, recipe_name, user_id], (error, results)  => {
+
+          pool.query('SELECT * FROM user_recipes WHERE user_id = $1 AND recipe_id = $2', [user_id, recipe_id], (error, results)  => {
             if (error) {
               console.error('error:', error);
               res.status(500).json({ error: 'error' });
+              return;
             } else {
-              console.log('recipe inserted');
-              res.status(201).json({ message: 'recipe inserted' });
+              // don't insert new recipe if user already has it in their list
+              if (results.rows.length > 0) {
+                console.log('recipe already inserted');
+                res.status(200).json({ message: 'recipe already inserted, not inserting again' });
+                return;
+              } else {
+                // insert if not in the user's list
+                pool.query('INSERT INTO user_recipes (recipe_id, recipe_name, user_id) VALUES ($1, $2, $3)', [recipe_id, recipe_name, user_id], (error, results)  => {
+                  if (error) {
+                    console.error('error:', error);
+                    res.status(500).json({ error: 'error' });
+                  } else {
+                    console.log('recipe inserted');
+                    res.status(201).json({ message: 'recipe inserted' });
+                  }
+                });
+              }
             }
           });
         } else {
@@ -55,6 +72,1053 @@ module.exports = {
         res.status(200).send(results.rows);
       }
     });
+  },
+  async getRecipe(req, res) {
+  //   const options = {
+  //     method: 'GET',
+  //     url: 'https://tasty.p.rapidapi.com/recipes/get-more-info',
+  //     params: {id: `${req.query.recipeID}`},
+  //     headers: {
+  //       'X-RapidAPI-Key': `${process.env.TOKEN}`,
+  //       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+  //     }
+  //   };
+  //  axios(options)
+  //   .then((response) => {
+  //     res.send(response.data);
+  //   })
+  //   .catch ((error) => {
+  //     console.error(error);
+  //   });
+
+  res.send({
+    "servings_noun_plural": "servings",
+    "thumbnail_url": "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/199808.jpg",
+    "updated_at": 1692116688,
+    "is_one_top": false,
+    "prep_time_minutes": 0,
+    "seo_title": "",
+    "compilations": [],
+    "brand": null,
+    "total_time_tier": {
+      "tier": "under_30_minutes",
+      "display_tier": "Under 30 minutes"
+    },
+    "brand_id": null,
+    "is_shoppable": true,
+    "promotion": "full",
+    "tags": [
+      {
+        "id": 64444,
+        "name": "north_american",
+        "display_name": "North American",
+        "type": "cuisine",
+        "root_tag_type": "cuisine"
+      },
+      {
+        "id": 64463,
+        "name": "dairy_free",
+        "display_name": "Dairy-Free",
+        "type": "dietary",
+        "root_tag_type": "dietary"
+      },
+      {
+        "display_name": "Healthy",
+        "type": "healthy",
+        "root_tag_type": "healthy",
+        "id": 64466,
+        "name": "healthy"
+      },
+      {
+        "id": 64468,
+        "name": "vegan",
+        "display_name": "Vegan",
+        "type": "dietary",
+        "root_tag_type": "dietary"
+      },
+      {
+        "type": "dietary",
+        "root_tag_type": "dietary",
+        "id": 64469,
+        "name": "vegetarian",
+        "display_name": "Vegetarian"
+      },
+      {
+        "id": 64471,
+        "name": "easy",
+        "display_name": "Easy",
+        "type": "difficulty",
+        "root_tag_type": "difficulty"
+      },
+      {
+        "display_name": "Under 30 Minutes",
+        "type": "difficulty",
+        "root_tag_type": "difficulty",
+        "id": 64472,
+        "name": "under_30_minutes"
+      },
+      {
+        "id": 64489,
+        "name": "lunch",
+        "display_name": "Lunch",
+        "type": "meal",
+        "root_tag_type": "meal"
+      },
+      {
+        "id": 65851,
+        "name": "big_batch",
+        "display_name": "Big Batch",
+        "type": "cooking_style",
+        "root_tag_type": "cooking_style"
+      },
+      {
+        "name": "meal_prep",
+        "display_name": "Meal Prep",
+        "type": "cooking_style",
+        "root_tag_type": "cooking_style",
+        "id": 65853
+      },
+      {
+        "display_name": "No Bake Desserts",
+        "type": "cooking_style",
+        "root_tag_type": "cooking_style",
+        "id": 65854,
+        "name": "no_bake_desserts"
+      },
+      {
+        "name": "pyrex",
+        "display_name": "Pyrex",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1247785
+      },
+      {
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1247793,
+        "name": "whisk",
+        "display_name": "Whisk"
+      },
+      {
+        "display_name": "Wooden Spoon",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1247794,
+        "name": "wooden_spoon"
+      },
+      {
+        "id": 1280501,
+        "name": "chefs_knife",
+        "display_name": "Chef's Knife",
+        "type": "equipment",
+        "root_tag_type": "equipment"
+      },
+      {
+        "display_name": "Cutting Board",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1280503,
+        "name": "cutting_board"
+      },
+      {
+        "name": "liquid_measuring_cup",
+        "display_name": "Liquid Measuring Cup",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1280506
+      },
+      {
+        "root_tag_type": "equipment",
+        "id": 1280507,
+        "name": "dry_measuring_cups",
+        "display_name": "Dry Measuring Cups",
+        "type": "equipment"
+      },
+      {
+        "name": "measuring_spoons",
+        "display_name": "Measuring Spoons",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1280508
+      },
+      {
+        "name": "mixing_bowl",
+        "display_name": "Mixing Bowl",
+        "type": "equipment",
+        "root_tag_type": "equipment",
+        "id": 1280510
+      },
+      {
+        "display_name": "NYNM Veggie",
+        "type": "feature_page",
+        "root_tag_type": "feature_page",
+        "id": 6543461,
+        "name": "nynm_veggie"
+      },
+      {
+        "display_name": "High-Protein",
+        "type": "healthy",
+        "root_tag_type": "healthy",
+        "id": 8091917,
+        "name": "high_protein"
+      },
+      {
+        "root_tag_type": "healthy",
+        "id": 8091918,
+        "name": "low_sugar",
+        "display_name": "Low-Sugar",
+        "type": "healthy"
+      },
+      {
+        "id": 8091920,
+        "name": "high_fiber",
+        "display_name": "High-Fiber",
+        "type": "healthy",
+        "root_tag_type": "healthy"
+      },
+      {
+        "display_name": "Dietary",
+        "type": "dietary",
+        "root_tag_type": "dietary",
+        "id": 9295814,
+        "name": "dietary"
+      },
+      {
+        "type": "lunch",
+        "root_tag_type": "meal",
+        "id": 9299495,
+        "name": "salads",
+        "display_name": "Salads"
+      }
+    ],
+    "country": "US",
+    "description": "Boring salads no more! This colorful super salad is the perfect way to start the new year off with a bang. Carrot, broccoli, kale, cabbage, red bell pepper, and creamy avocado are just a few of the many ingredients that pack in tons of various vitamins, minerals, and antioxidants to boost your health, AND they taste delicious! Crazy! This dish will be your new staple recipe to get tons of nutrients in one meal.",
+    "video_id": 75545,
+    "num_servings": 6,
+    "seo_path": "9295813,64489,9299495",
+    "servings_noun_singular": "serving",
+    "sections": [
+      {
+        "components": [
+          {
+            "id": 50317,
+            "raw_text": "3 tablespoons whole grain mustard",
+            "extra_comment": "",
+            "position": 1,
+            "measurements": [
+              {
+                "unit": {
+                  "name": "tablespoon",
+                  "abbreviation": "tbsp",
+                  "display_singular": "tablespoon",
+                  "display_plural": "tablespoons",
+                  "system": "imperial"
+                },
+                "id": 422039,
+                "quantity": "3"
+              }
+            ],
+            "ingredient": {
+              "created_at": 1547087712,
+              "updated_at": 1547087712,
+              "id": 5032,
+              "name": "wole grain mustard",
+              "display_singular": "wole grain mustard",
+              "display_plural": "wole grain mustards"
+            }
+          },
+          {
+            "id": 50318,
+            "raw_text": "2 tablespoons organic maple syrup",
+            "extra_comment": "",
+            "position": 2,
+            "measurements": [
+              {
+                "quantity": "2",
+                "unit": {
+                  "system": "imperial",
+                  "name": "tablespoon",
+                  "abbreviation": "tbsp",
+                  "display_singular": "tablespoon",
+                  "display_plural": "tablespoons"
+                },
+                "id": 422037
+              }
+            ],
+            "ingredient": {
+              "id": 2498,
+              "name": "organic maple syrup",
+              "display_singular": "organic maple syrup",
+              "display_plural": "organic maple syrups",
+              "created_at": 1500747450,
+              "updated_at": 1509035125
+            }
+          },
+          {
+            "raw_text": "1 tablespoon grated fresh ginger",
+            "extra_comment": "grated",
+            "position": 3,
+            "measurements": [
+              {
+                "id": 422040,
+                "quantity": "1",
+                "unit": {
+                  "display_plural": "tablespoons",
+                  "system": "imperial",
+                  "name": "tablespoon",
+                  "abbreviation": "tbsp",
+                  "display_singular": "tablespoon"
+                }
+              }
+            ],
+            "ingredient": {
+              "display_plural": "fresh gingers",
+              "created_at": 1495677069,
+              "updated_at": 1509035238,
+              "id": 727,
+              "name": "fresh ginger",
+              "display_singular": "fresh ginger"
+            },
+            "id": 50319
+          },
+          {
+            "id": 50320,
+            "raw_text": "4 cloves garlic, grated",
+            "extra_comment": "grated",
+            "position": 4,
+            "measurements": [
+              {
+                "id": 422041,
+                "quantity": "4",
+                "unit": {
+                  "name": "clove",
+                  "abbreviation": "clove",
+                  "display_singular": "clove",
+                  "display_plural": "cloves",
+                  "system": "none"
+                }
+              }
+            ],
+            "ingredient": {
+              "name": "garlic",
+              "display_singular": "garlic",
+              "display_plural": "garlics",
+              "created_at": 1493744766,
+              "updated_at": 1509035285,
+              "id": 95
+            }
+          },
+          {
+            "id": 50321,
+            "raw_text": "1 tablespoon toasted sesame seeds",
+            "extra_comment": "toasted",
+            "position": 5,
+            "measurements": [
+              {
+                "id": 422063,
+                "quantity": "1",
+                "unit": {
+                  "display_plural": "tablespoons",
+                  "system": "imperial",
+                  "name": "tablespoon",
+                  "abbreviation": "tbsp",
+                  "display_singular": "tablespoon"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 1006,
+              "name": "sesame seed",
+              "display_singular": "sesame seed",
+              "display_plural": "sesame seeds",
+              "created_at": 1496186841,
+              "updated_at": 1509035215
+            }
+          },
+          {
+            "id": 50322,
+            "raw_text": "¼ teaspoon cayenne pepper",
+            "extra_comment": "",
+            "position": 6,
+            "measurements": [
+              {
+                "id": 422038,
+                "quantity": "¼",
+                "unit": {
+                  "display_plural": "teaspoons",
+                  "system": "imperial",
+                  "name": "teaspoon",
+                  "abbreviation": "tsp",
+                  "display_singular": "teaspoon"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 10,
+              "name": "cayenne pepper",
+              "display_singular": "cayenne pepper",
+              "display_plural": "cayenne peppers",
+              "created_at": 1493307142,
+              "updated_at": 1509035289
+            }
+          },
+          {
+            "measurements": [
+              {
+                "id": 422045,
+                "quantity": "¼",
+                "unit": {
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial"
+                }
+              },
+              {
+                "id": 422043,
+                "quantity": "60",
+                "unit": {
+                  "name": "milliliter",
+                  "abbreviation": "mL",
+                  "display_singular": "mL",
+                  "display_plural": "mL",
+                  "system": "metric"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 345,
+              "name": "apple cider vinegar",
+              "display_singular": "apple cider vinegar",
+              "display_plural": "apple cider vinegars",
+              "created_at": 1494882105,
+              "updated_at": 1509035268
+            },
+            "id": 50323,
+            "raw_text": "¼ cup apple cider vinegar",
+            "extra_comment": "",
+            "position": 7
+          },
+          {
+            "extra_comment": "",
+            "position": 8,
+            "measurements": [
+              {
+                "id": 422049,
+                "quantity": "¼",
+                "unit": {
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial"
+                }
+              },
+              {
+                "quantity": "60",
+                "unit": {
+                  "display_plural": "mL",
+                  "system": "metric",
+                  "name": "milliliter",
+                  "abbreviation": "mL",
+                  "display_singular": "mL"
+                },
+                "id": 422046
+              }
+            ],
+            "ingredient": {
+              "name": "lemon juice",
+              "display_singular": "lemon juice",
+              "display_plural": "lemon juices",
+              "created_at": 1494624947,
+              "updated_at": 1509035274,
+              "id": 271
+            },
+            "id": 50324,
+            "raw_text": "¼ cup lemon juice"
+          },
+          {
+            "id": 50325,
+            "raw_text": "⅓ cup extra-virgin olive oil",
+            "extra_comment": "",
+            "position": 9,
+            "measurements": [
+              {
+                "id": 422053,
+                "quantity": "⅓",
+                "unit": {
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial"
+                }
+              },
+              {
+                "id": 422048,
+                "quantity": "80",
+                "unit": {
+                  "name": "milliliter",
+                  "abbreviation": "mL",
+                  "display_singular": "mL",
+                  "display_plural": "mL",
+                  "system": "metric"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 452,
+              "name": "extra virgin olive oil",
+              "display_singular": "extra virgin olive oil",
+              "display_plural": "extra virgin olive oils",
+              "created_at": 1495076759,
+              "updated_at": 1509035259
+            }
+          },
+          {
+            "extra_comment": "to taste",
+            "position": 10,
+            "measurements": [
+              {
+                "id": 422052,
+                "quantity": "0",
+                "unit": {
+                  "display_singular": "",
+                  "display_plural": "",
+                  "system": "none",
+                  "name": "",
+                  "abbreviation": ""
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 11,
+              "name": "kosher salt",
+              "display_singular": "kosher salt",
+              "display_plural": "kosher salts",
+              "created_at": 1493307153,
+              "updated_at": 1509035289
+            },
+            "id": 50326,
+            "raw_text": "Kosher salt, to taste"
+          },
+          {
+            "measurements": [
+              {
+                "id": 422047,
+                "quantity": "0",
+                "unit": {
+                  "name": "",
+                  "abbreviation": "",
+                  "display_singular": "",
+                  "display_plural": "",
+                  "system": "none"
+                }
+              }
+            ],
+            "ingredient": {
+              "display_singular": "black pepper",
+              "display_plural": "black peppers",
+              "created_at": 1493307183,
+              "updated_at": 1509035289,
+              "id": 12,
+              "name": "black pepper"
+            },
+            "id": 50327,
+            "raw_text": "Black pepper, to taste",
+            "extra_comment": "to taste",
+            "position": 11
+          },
+          {
+            "id": 50328,
+            "raw_text": "2 cups thinly sliced lacinato kale",
+            "extra_comment": "thinly sliced",
+            "position": 12,
+            "measurements": [
+              {
+                "id": 422044,
+                "quantity": "2",
+                "unit": {
+                  "system": "imperial",
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups"
+                }
+              },
+              {
+                "id": 422042,
+                "quantity": "135",
+                "unit": {
+                  "system": "metric",
+                  "name": "gram",
+                  "abbreviation": "g",
+                  "display_singular": "g",
+                  "display_plural": "g"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 4852,
+              "name": "lacinato kale",
+              "display_singular": "lacinato kale",
+              "display_plural": "lacinato kales",
+              "created_at": 1540618699,
+              "updated_at": 1540618699
+            }
+          },
+          {
+            "raw_text": "2 large carrots, peeled and grated",
+            "extra_comment": "peeled and grated",
+            "position": 13,
+            "measurements": [
+              {
+                "quantity": "2",
+                "unit": {
+                  "display_singular": "",
+                  "display_plural": "",
+                  "system": "none",
+                  "name": "",
+                  "abbreviation": ""
+                },
+                "id": 422056
+              }
+            ],
+            "ingredient": {
+              "name": "large carrot",
+              "display_singular": "large carrot",
+              "display_plural": "large carrots",
+              "created_at": 1495688206,
+              "updated_at": 1509035236,
+              "id": 755
+            },
+            "id": 50329
+          },
+          {
+            "measurements": [
+              {
+                "id": 422055,
+                "quantity": "2",
+                "unit": {
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial",
+                  "name": "cup",
+                  "abbreviation": "c"
+                }
+              },
+              {
+                "id": 422051,
+                "quantity": "300",
+                "unit": {
+                  "name": "gram",
+                  "abbreviation": "g",
+                  "display_singular": "g",
+                  "display_plural": "g",
+                  "system": "metric"
+                }
+              }
+            ],
+            "ingredient": {
+              "updated_at": 1509035180,
+              "id": 1565,
+              "name": "broccoli floret",
+              "display_singular": "broccoli floret",
+              "display_plural": "broccoli florets",
+              "created_at": 1496854726
+            },
+            "id": 50330,
+            "raw_text": "2 cups broccoli florets",
+            "extra_comment": "",
+            "position": 14
+          },
+          {
+            "extra_comment": "thinly sliced",
+            "position": 15,
+            "measurements": [
+              {
+                "id": 422060,
+                "quantity": "2",
+                "unit": {
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial",
+                  "name": "cup"
+                }
+              },
+              {
+                "id": 422058,
+                "quantity": "200",
+                "unit": {
+                  "system": "metric",
+                  "name": "gram",
+                  "abbreviation": "g",
+                  "display_singular": "g",
+                  "display_plural": "g"
+                }
+              }
+            ],
+            "ingredient": {
+              "created_at": 1495486340,
+              "updated_at": 1509035247,
+              "id": 613,
+              "name": "red cabbage",
+              "display_singular": "red cabbage",
+              "display_plural": "red cabbages"
+            },
+            "id": 50331,
+            "raw_text": "2 cups thinly sliced red cabbage"
+          },
+          {
+            "ingredient": {
+              "id": 227,
+              "name": "red bell pepper",
+              "display_singular": "red bell pepper",
+              "display_plural": "red bell peppers",
+              "created_at": 1494292131,
+              "updated_at": 1509035277
+            },
+            "id": 50332,
+            "raw_text": "1 red bell pepper, seeded and thinly sliced",
+            "extra_comment": "seeded and thinly sliced",
+            "position": 16,
+            "measurements": [
+              {
+                "id": 422057,
+                "quantity": "1",
+                "unit": {
+                  "name": "",
+                  "abbreviation": "",
+                  "display_singular": "",
+                  "display_plural": "",
+                  "system": "none"
+                }
+              }
+            ]
+          },
+          {
+            "measurements": [
+              {
+                "id": 422061,
+                "quantity": "1",
+                "unit": {
+                  "name": "",
+                  "abbreviation": "",
+                  "display_singular": "",
+                  "display_plural": "",
+                  "system": "none"
+                }
+              }
+            ],
+            "ingredient": {
+              "id": 1005,
+              "name": "avocado",
+              "display_singular": "avocado",
+              "display_plural": "avocados",
+              "created_at": 1496185911,
+              "updated_at": 1509035215
+            },
+            "id": 50333,
+            "raw_text": "1 avocado, peeled and cubed",
+            "extra_comment": "peeled and cubed",
+            "position": 17
+          },
+          {
+            "extra_comment": "chopped",
+            "position": 18,
+            "measurements": [
+              {
+                "id": 422054,
+                "quantity": "1",
+                "unit": {
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial"
+                }
+              },
+              {
+                "id": 422050,
+                "quantity": "100",
+                "unit": {
+                  "name": "gram",
+                  "abbreviation": "g",
+                  "display_singular": "g",
+                  "display_plural": "g",
+                  "system": "metric"
+                }
+              }
+            ],
+            "ingredient": {
+              "display_singular": "walnut",
+              "display_plural": "walnuts",
+              "created_at": 1521080746,
+              "updated_at": 1521080746,
+              "id": 3869,
+              "name": "walnut"
+            },
+            "id": 50334,
+            "raw_text": "1 cup chopped walnuts"
+          },
+          {
+            "id": 50335,
+            "raw_text": "½ cup chopped fresh parsley",
+            "extra_comment": "chopped",
+            "position": 19,
+            "measurements": [
+              {
+                "id": 422062,
+                "quantity": "½",
+                "unit": {
+                  "name": "cup",
+                  "abbreviation": "c",
+                  "display_singular": "cup",
+                  "display_plural": "cups",
+                  "system": "imperial"
+                }
+              },
+              {
+                "id": 422059,
+                "quantity": "20",
+                "unit": {
+                  "display_singular": "g",
+                  "display_plural": "g",
+                  "system": "metric",
+                  "name": "gram",
+                  "abbreviation": "g"
+                }
+              }
+            ],
+            "ingredient": {
+              "display_singular": "fresh parlsey",
+              "display_plural": "fresh parlseys",
+              "created_at": 1519929772,
+              "updated_at": 1519929772,
+              "id": 3814,
+              "name": "fresh parlsey"
+            }
+          }
+        ],
+        "name": null,
+        "position": 1
+      }
+    ],
+    "id": 4709,
+    "inspired_by_url": "https://www.theroastedroot.net/ultimate-detox-salad/",
+    "language": "eng",
+    "total_time_minutes": null,
+    "instructions": [
+      {
+        "start_time": 7000,
+        "end_time": 36000,
+        "temperature": null,
+        "appliance": null,
+        "id": 43438,
+        "display_text": "In a liquid measuring cup, combine the mustard, maple syrup, ginger, garlic, sesame seeds, cayenne, apple cider vinegar, lemon juice, and olive oil. Whisk until fully incorporated. Season to taste with salt and pepper.",
+        "position": 1
+      },
+      {
+        "end_time": 55500,
+        "temperature": null,
+        "appliance": null,
+        "id": 43439,
+        "display_text": "Add the kale, carrots, red cabbage, broccoli, red cabbage, bell pepper, avocado, walnuts, and parsley to a large serving bowl.",
+        "position": 2,
+        "start_time": 40000
+      },
+      {
+        "appliance": null,
+        "id": 43440,
+        "display_text": "Pour desired amount of dressing over the salad and toss until everything is well coated.",
+        "position": 3,
+        "start_time": 56000,
+        "end_time": 76333,
+        "temperature": null
+      },
+      {
+        "appliance": null,
+        "id": 43441,
+        "display_text": "Garnish with more toasted sesame seeds",
+        "position": 4,
+        "start_time": 79000,
+        "end_time": 83833,
+        "temperature": null
+      },
+      {
+        "end_time": 88666,
+        "temperature": null,
+        "appliance": null,
+        "id": 43442,
+        "display_text": "Enjoy!",
+        "position": 5,
+        "start_time": 85833
+      }
+    ],
+    "canonical_id": "recipe:4709",
+    "facebook_posts": [],
+    "beauty_url": null,
+    "thumbnail_alt_text": "",
+    "tips_and_ratings_enabled": true,
+    "credits": [
+      {
+        "type": "internal",
+        "name": "Matthew Johnson"
+      }
+    ],
+    "original_video_url": "https://s3.amazonaws.com/video-api-prod/assets/f18727f5e6ee49f397eec94a7b208821/OO.mp4",
+    "show": {
+      "id": 17,
+      "name": "Tasty"
+    },
+    "renditions": [
+      {
+        "container": "mp4",
+        "url": "https://vid.tasty.co/output/122089/square_720/1546987325",
+        "name": "mp4_720x720",
+        "height": 720,
+        "file_size": 35567360,
+        "bit_rate": 2823,
+        "minimum_bit_rate": null,
+        "aspect": "square",
+        "width": 720,
+        "duration": 100798,
+        "maximum_bit_rate": null,
+        "content_type": "video/mp4",
+        "poster_url": "https://img.buzzfeed.com/video-transcoder-prod/output/122089/square_720/1546987325_00001.png"
+      },
+      {
+        "bit_rate": 972,
+        "maximum_bit_rate": null,
+        "content_type": "video/mp4",
+        "height": 320,
+        "width": 320,
+        "file_size": 12239415,
+        "container": "mp4",
+        "url": "https://vid.tasty.co/output/122089/square_320/1546987325",
+        "poster_url": "https://img.buzzfeed.com/video-transcoder-prod/output/122089/square_320/1546987325_00001.png",
+        "name": "mp4_320x320",
+        "duration": 100798,
+        "minimum_bit_rate": null,
+        "aspect": "square"
+      },
+      {
+        "poster_url": "https://img.buzzfeed.com/video-transcoder-prod/output/122089/landscape_720/1546987325_00001.png",
+        "width": 720,
+        "file_size": 35580301,
+        "minimum_bit_rate": null,
+        "content_type": "video/mp4",
+        "container": "mp4",
+        "url": "https://vid.tasty.co/output/122089/landscape_720/1546987325",
+        "name": "mp4_720x720",
+        "height": 720,
+        "duration": 100798,
+        "bit_rate": 2824,
+        "maximum_bit_rate": null,
+        "aspect": "square"
+      },
+      {
+        "height": 480,
+        "duration": 100798,
+        "file_size": 20879858,
+        "bit_rate": 1658,
+        "minimum_bit_rate": null,
+        "container": "mp4",
+        "url": "https://vid.tasty.co/output/122089/landscape_480/1546987325",
+        "width": 480,
+        "maximum_bit_rate": null,
+        "content_type": "video/mp4",
+        "aspect": "square",
+        "poster_url": "https://img.buzzfeed.com/video-transcoder-prod/output/122089/landscape_480/1546987325_00001.png",
+        "name": "mp4_480x480"
+      },
+      {
+        "height": 1080,
+        "width": 1080,
+        "duration": 100809,
+        "maximum_bit_rate": 4545,
+        "minimum_bit_rate": 273,
+        "container": "ts",
+        "url": "https://vid.tasty.co/output/122089/hls24_1546987325.m3u8",
+        "name": "low",
+        "file_size": null,
+        "bit_rate": null,
+        "content_type": "application/vnd.apple.mpegurl",
+        "aspect": "square",
+        "poster_url": "https://img.buzzfeed.com/video-transcoder-prod/output/122089/1445289064805-h2exzu/1546987325_00001.png"
+      }
+    ],
+    "nutrition": {
+      "carbohydrates": 26,
+      "fat": 31,
+      "protein": 9,
+      "sugar": 10,
+      "fiber": 9,
+      "updated_at": "2021-05-03T13:24:11+02:00",
+      "calories": 397
+    },
+    "buzz_id": null,
+    "keywords": "easy lunch, healthy recipe, immunity boosting, kale salad, new year meal, quick dinner, salad dressing, salad recipe, super food, tasty, tasty_vegetarian, veggie packed",
+    "yields": "Servings: 6",
+    "topics": [
+      {
+        "slug": "best-vegetarian",
+        "name": "Best Vegetarian"
+      },
+      {
+        "name": "Healthy Eating",
+        "slug": "healthy"
+      },
+      {
+        "name": "Weekend Meal Prep",
+        "slug": "meal-prep"
+      },
+      {
+        "name": "No Bake Desserts",
+        "slug": "no-bake-desserts"
+      },
+      {
+        "name": "Vegan",
+        "slug": "vegan"
+      },
+      {
+        "name": "Lunch",
+        "slug": "lunch"
+      },
+      {
+        "name": "American",
+        "slug": "american"
+      }
+    ],
+    "draft_status": "published",
+    "show_id": 17,
+    "slug": "nutrient-packed-colorful-super-salad",
+    "video_url": "https://vid.tasty.co/output/122089/hls24_1546987325.m3u8",
+    "nutrition_visibility": "auto",
+    "aspect_ratio": "1:1",
+    "cook_time_minutes": 0,
+    "created_at": 1546987036,
+    "video_ad_content": "none",
+    "price": {
+      "total": 4900,
+      "portion": 800,
+      "consumption_total": 1250,
+      "consumption_portion": 200,
+      "updated_at": "2023-09-14T07:02:06+02:00"
+    },
+    "approved_at": 1547093372,
+    "name": "Nutrient-Packed Colorful Super Salad",
+    "user_ratings": {
+      "count_positive": 267,
+      "count_negative": 17,
+      "score": 0.940141
+    }
+  });
+
+
+
   },
   async getRecipes(req, res) {
   //   const options = {

@@ -38,33 +38,33 @@ const RecipeSearch = () => {
       })
       .catch((error) => console.log('Error', error.message));
     }
-const getTypes = () => {
-  setIsLoading(true);
+  const getTypes = () => {
+    setIsLoading(true);
     const options = {
       method: 'GET',
       url: '/tags/types',
       responseType: 'json',
     }
-      axios(options)
-      .then((response) => {
-        const mappedTypes = response.data.results.reduce((result, item) => {
-          const { type, name, display_name } = item;
-          if (!result[type]) {
-            result[type] = [];
-          }
-          result[type].push({name, display_name});
-          return result;
-        }, {});
-
-        if (Object.keys(mappedTypes).length === 0) {
-          getTypes();
-        } else {
-          setTagTypes(mappedTypes);
-          setIsLoading(false);
+    axios(options)
+    .then((response) => {
+      const mappedTypes = response.data.results.reduce((result, item) => {
+        const { type, name, display_name } = item;
+        if (!result[type]) {
+          result[type] = [];
         }
-      })
-      .catch((error) => console.log('Error', error.message));
-    }
+        result[type].push({name, display_name});
+        return result;
+      }, {});
+
+      if (Object.keys(mappedTypes).length === 0) {
+        getTypes();
+      } else {
+        setTagTypes(mappedTypes);
+        setIsLoading(false);
+      }
+    })
+    .catch((error) => console.log('Error', error.message));
+  }
 
     useEffect(() => {
       if (Object.keys(tagTypes).length === 0) {
@@ -77,7 +77,16 @@ const getTypes = () => {
       <button onClick={() => {
         setPage('userRecipes');
       }}>Your Saved Recipes</button>
-
+      <button onClick={() => {
+        setPage('feed');
+      }}>
+        Feed
+      </button>
+      <button onClick={() => {
+        setPage('match');
+      }}>
+        Food Fight
+      </button>
       <h2>Search for Recipe</h2>
       <input type='text' onChange={(e) => setFoodQuery(e.target.value)}></input>
       <button onClick={() => getRecipes(foodQuery)}>Search Recipes</button>

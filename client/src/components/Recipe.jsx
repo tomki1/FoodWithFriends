@@ -66,7 +66,7 @@ const Recipe = () => {
       {recipeResults[recipeIndex].sections[0] ?
         <ul>
           {recipeResults[recipeIndex].sections[0].components.map((recipeIngredients, i) => (
-            <li key={i}>{recipeIngredients.ingredient.name}</li>
+            <li key={i}>{recipeIngredients.raw_text}</li>
           ))}
         </ul>
       : <p>none listed</p>}
