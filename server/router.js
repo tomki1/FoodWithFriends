@@ -14,6 +14,7 @@ router.post('/recipes/add', controller.recipes.addRecipe);
 router.post('/users/add', controller.users.addUser);
 router.post('/matches/add', controller.matches.addMatch);
 router.put('/matches/update', controller.matches.updateMatch);
+router.put('/matches/likes', controller.matches.updateLikes);
 
 
 

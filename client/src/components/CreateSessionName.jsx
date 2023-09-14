@@ -19,14 +19,12 @@ const CreateSessionName = () => {
       method: 'POST',
       url: '/users/add',
       responseType: 'json',
-      params: {
+      body: {
         username: username
       }
     }
     axios(options)
     .then((response) => {
-      console.log(response.data);
-      alert(`${response.data}`);
       setPage('userRecipes');
     })
     .catch((error) => console.log('Error', error.message));

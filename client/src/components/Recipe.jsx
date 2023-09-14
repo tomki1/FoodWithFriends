@@ -14,7 +14,7 @@ const Recipe = () => {
       method: 'POST',
       url: '/recipes/add',
       responseType: 'json',
-      params: {
+      body: {
         id: recipeResults[recipeIndex].id,
         name: recipeResults[recipeIndex].name,
         username: sessionStorage.getItem('username')
