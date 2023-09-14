@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import  RecipeSearch from './RecipeSearch.jsx';
 import  Recipe from './Recipe.jsx';
 import FriendList from './FriendList.jsx';
+import CreateSessionName from './CreateSessionName.jsx';
+import UserRecipes from './UserRecipes.jsx';
 
 export const FoodQueryContext = React.createContext();
 export const RecipeResultsContext = React.createContext();
@@ -13,7 +15,7 @@ const App = () => {
 
   const [foodQuery, setFoodQuery] = useState('');
   const [recipeResults, setRecipeResults] = useState([]);
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState('createUsername');
   const [recipeIndex, setRecipeIndex] = useState(-1);
 
   useEffect(() => {
@@ -35,6 +37,8 @@ const App = () => {
         recipeIndex, setRecipeIndex
       ]}>
         <h1>Food with Friends</h1>
+        {page === 'userRecipes' ? <UserRecipes/> : null }
+        {page === 'createUsername' ? <CreateSessionName/> : null }
         {page === 'home' ? <RecipeSearch/> : null }
 
         {page === 'recipe' ? <Recipe/> : null }
