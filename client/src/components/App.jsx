@@ -22,7 +22,7 @@ const App = () => {
 
   const [foodQuery, setFoodQuery] = useState('');
   const [recipeResults, setRecipeResults] = useState([]);
-  const [page, setPage] = useState('match');
+  const [page, setPage] = useState('createUsername');
   const [recipeIndex, setRecipeIndex] = useState(-1);
   const [recipeID, setRecipeID] = useState(-1);
   const [secondUser, setSecondUser] = useState(-1);

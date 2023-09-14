@@ -20,6 +20,8 @@ const ViewMatch = () => {
   const [recipeID, setRecipeID] = useContext(RecipeIDContext);
   const [secondUser, setSecondUser] = useContext(SecondUserContext);
   const [recipeName, setRecipeName] = useContext(RecipeNameContext);
+  const [selectedImage, setSelectedImage] = useState('');
+  // const [imageData, setImageData] = useState('');
 
 
   const getMatchData = () => {
@@ -38,26 +40,58 @@ const ViewMatch = () => {
     }
       axios(options)
       .then((response) => {
-        console.log("hi")
+        // setImageData(response.data);
+
         setMatchData(response.data);
-        console.log(response.data);
       })
       .catch((error) => console.log('Error', error.message));
 
 
   }
 
-  const imageHandler = () => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
 
+    reader.onload = (event) => {
+      const base64String = event.target.result;
+      setSelectedImage(base64String);
+    };
+  reader.readAsDataURL(file);
+  };
 
+  const imageClickHandler = () => {
+    console.log("in image click")
+    if (selectedImage) {
+      const currentUser = sessionStorage.getItem('username');
+      const options = {
+        method: 'PUT',
+        url: '/matches/update',
+        responseType: 'json',
+        data: {
+          recipeID,
+          secondUser,
+          currentUser,
+          imageData: selectedImage
+        }
+      }
+        axios(options)
+        .then((response) => {
+          setMatchData(response.data);
+        })
+        .catch((error) => console.log('Error', error.message));
 
-
+    }
   }
 
   useEffect(() => {
     getMatchData();
     console.log('matchData has been updated:', matchData);
   }, []);
+
+  useEffect(() => {
+    console.log('matchData has been updated:', matchData);
+  }, [matchData]);
   return (
     <div>
       <button onClick={() => {
@@ -86,23 +120,23 @@ const ViewMatch = () => {
       <thead>
         <tr>
           <th style={headerCellStyle}>Recipe Name</th>
-          <th style={headerCellStyle}>Your Photo</th>
-          <th style={headerCellStyle}>Friend's Photo</th>
+          <th style={headerCellStyle}>{matchData.username_1}</th>
+          <th style={headerCellStyle}>{matchData.username_2}</th>
         </tr>
         </thead>
         <tbody>
             <tr>
-              <td style={cellStyle}>{matchData.recipe_name}</td>
-              <td style={cellStyle}>{matchData.user_1_photo}</td>
-              <td style={cellStyle}>{matchData.user_2_photo}</td>
+              <td style={cellStyle}>{recipeName}</td>
+              <td style={cellStyle}>     <img src={matchData?.imageData_1} alt="Recipe" /></td>
+              <td style={cellStyle}><img src={matchData?.imageData_2} alt="Recipe" /></td>
             </tr>
         </tbody>
       </table>
 
-      <div className="form-group">
-      <p className="text-muted">Select a jpeg image of the collectible.</p>
-      <input className="form-control-file" type="file" name="pic" id="image" accept="image/jpeg" required />
-      <button className="btn btn-success" onClick={()=>{imageHandler();}}>Add</button>
+      <div>
+      <input type="file" onChange={handleImageChange} />
+      {selectedImage && <img src={selectedImage} alt={sessionStorage.getItem('username')} />}
+      <button onClick={imageClickHandler}>Upload Image</button>
     </div>
     </div>
   )
