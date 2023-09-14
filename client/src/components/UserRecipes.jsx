@@ -36,7 +36,17 @@ const UserRecipes = () => {
       <button onClick={() => {
         setPage('home');
       }}>
-        back search page
+        Search
+      </button>
+      <button onClick={() => {
+        setPage('feed');
+      }}>
+        Feed
+      </button>
+      <button onClick={() => {
+        setPage('match');
+      }}>
+        Food Fight
       </button>
       <h2>Your Saved Recipes</h2>
 
