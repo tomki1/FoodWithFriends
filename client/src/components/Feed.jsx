@@ -104,10 +104,10 @@ const Feed = () => {
               <td style={cellStyle}>{feedItem.username_1}</td>
               <td style={cellStyle}>{feedItem.username_2}</td>
               <td style={cellStyle}>
-                <img src={feedItem.user_1_photo} alt="Recipe" />
+                {feedItem.user_1_photo ? <img src={feedItem.user_1_photo} alt="Recipe" /> : <p>nothing here yet</p>}
               </td>
               <td style={cellStyle}>
-                <img src={feedItem.user_2_photo} alt="Recipe" />
+                {feedItem.user_2_photo ? <img src={feedItem.user_2_photo} alt="Recipe" /> : <p>nothing here yet</p>}
               </td>
               <td style={cellStyle}>{feedItem.likes_1}</td>
               <td style={cellStyle}>{feedItem.likes_2}</td>
