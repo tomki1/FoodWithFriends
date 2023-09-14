@@ -1,3 +1,4 @@
+const { pool } = require('../../db/db.js');
 const axios = require('axios');
 
 

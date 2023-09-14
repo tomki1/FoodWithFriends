@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FoodQueryContext, RecipeResultsContext } from './App.jsx';
+import { FoodQueryContext, RecipeResultsContext, TogglePageContext } from './App.jsx';
 import axios from 'axios';
 import RecipeResults from './RecipeResults.jsx';
 import TypeDropdown from './TypeDropdown.jsx';
@@ -11,6 +11,7 @@ const RecipeSearch = () => {
 
  const [foodQuery, setFoodQuery] = useContext(FoodQueryContext);
  const [recipeResults, setRecipeResults] = useContext(RecipeResultsContext);
+ const [page, setPage] = useContext(TogglePageContext);
 
  const [tagTypes, setTagTypes] = useState([]);
  const [selectedType, setSelectedType] = useState(-1);
@@ -73,6 +74,10 @@ const getTypes = () => {
 
   return (
     <div>
+      <button onClick={() => {
+        setPage('userRecipes');
+      }}>Your Saved Recipes</button>
+
       <h2>Search for Recipe</h2>
       <input type='text' onChange={(e) => setFoodQuery(e.target.value)}></input>
       <button onClick={() => getRecipes(foodQuery)}>Search Recipes</button>

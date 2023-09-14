@@ -1,8 +1,61 @@
+const { pool } = require('../../db/db.js');
 const axios = require('axios');
-
 
 module.exports = {
 
+  async addRecipe(req, res) {
+    const recipe_id = req.query.id;
+    const recipe_name = req.query.name;
+    const username = req.query.username;
+
+    pool.query('SELECT id FROM users WHERE username = $1', [username], (error, results) => {
+      if (error) {
+        console.error('Error retrieving user ID:', error);
+      } else {
+        if (results.rows.length > 0) {
+          const user_id = results.rows[0].id;
+          pool.query('INSERT INTO user_recipes (recipe_id, recipe_name, user_id) VALUES ($1, $2, $3)', [recipe_id, recipe_name, user_id], (error, results)  => {
+            if (error) {
+              console.error('error:', error);
+              res.status(500).json({ error: 'error' });
+            } else {
+              console.log('recipe inserted');
+              res.status(201).json({ message: 'recipe inserted' });
+            }
+          });
+        } else {
+          console.error('User not found');
+        }
+      }
+    });
+  },
+  async getUserRecipes(req, res) {
+    const username = req.query.username;
+    let user_id;
+
+    if (username !== undefined) {
+      const userResult = await pool.query('SELECT id FROM users WHERE username = $1', [username]);
+
+      if (userResult.rows.length > 0) {
+        user_id = userResult.rows[0].id;
+      } else {
+        res.send("User not found");
+        return;
+      }
+    } else {
+      res.send("Username not provided");
+      return;
+    }
+
+    pool.query('SELECT recipe_id, recipe_name FROM user_recipes WHERE user_id = $1', [user_id], (error, results) => {
+      if (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Error' });
+      } else {
+        res.status(200).send(results.rows);
+      }
+    });
+  },
   async getRecipes(req, res) {
   //   const options = {
   //     method: 'GET',
