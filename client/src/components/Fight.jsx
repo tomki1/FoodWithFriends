@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeResultsContext } from './App.jsx';
+import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeResultsContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
 
 
@@ -10,6 +10,7 @@ const Fight = () => {
   const [recipeID, setRecipeID] = useContext(RecipeIDContext);
   const [secondUser, setSecondUser] = useContext(SecondUserContext);
   const [recipeResults, setRecipeResults] = useContext(RecipeResultsContext);
+  const [recipeName, setRecipeName] = useContext(RecipeNameContext);
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,6 +33,28 @@ const Fight = () => {
       })
       .catch((error) => console.log('Error', error.message));
     }
+
+    const createMatch = () => {
+      setIsLoading(true);
+      const currentUser = sessionStorage.getItem('username');
+      const options = {
+        method: 'POST',
+        url: '/matches/add',
+        responseType: 'json',
+        params: {
+          recipeID,
+          secondUser,
+          currentUser,
+          recipeName
+        }
+      }
+        axios(options)
+        .then((response) => {
+          console.log(response.data);
+          setIsLoading(false);
+        })
+        .catch((error) => console.log('Error', error.message));
+      }
 
     useEffect(() => {
       getRecipe();
@@ -64,6 +87,16 @@ const Fight = () => {
         Food Fight
       </button>
       <h2>Get Cooking!</h2>
+      <button onClick={() => {
+        createMatch();
+      }}>
+        Create Match
+      </button>
+      <button onClick={() => {
+        setPage('viewMatch');
+      }}>
+        View Match
+      </button>
       {isLoading ? null :
       <>
        <h2>{recipeResults?.name}</h2>

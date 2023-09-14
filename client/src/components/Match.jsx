@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { TogglePageContext, RecipeIDContext, SecondUserContext } from './App.jsx';
+import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
 
 const cellStyle = {
@@ -17,6 +17,7 @@ const Match = () => {
   const [userMatches, setUserMatches] = useState([]);
   const [recipeID, setRecipeID] = useContext(RecipeIDContext);
   const [secondUser, setSecondUser] = useContext(SecondUserContext);
+  const [recipeName, setRecipeName] = useContext(RecipeNameContext);
 
   const [page, setPage] = useContext(TogglePageContext);
 
@@ -44,9 +45,10 @@ const Match = () => {
   }, []);
 
 
-  const clickHandler = (recipe_id, second_user_id) => {
+  const clickHandler = (recipe_id, second_user_id, recipe_name) => {
     setRecipeID(recipe_id);
     setSecondUser(second_user_id);
+    setRecipeName(recipe_name);
     setPage('fight');
   }
   return (
@@ -82,7 +84,7 @@ const Match = () => {
               <td style={cellStyle}>{match.recipe_name}</td>
               <td style={cellStyle}>
                 <button onClick={() => {
-                  clickHandler(match.recipe_id, match.user2_username);
+                  clickHandler(match.recipe_id, match.user2_username, match.recipe_name);
                   }}>
                   Fight
                 </button>
