@@ -8,9 +8,9 @@ import Feed from './Feed.jsx';
 import Match from './Match.jsx';
 import Fight from './Fight.jsx';
 import ViewMatch from './ViewMatch.jsx';
+import NavBar from './Nav.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '../scss/main.scss'; // Import your SCSS styles
-import { Button } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container';
 
 
 export const FoodQueryContext = React.createContext();
@@ -45,7 +45,7 @@ const App = () => {
 
   return (
     <div>
-      <Button bsStyle='primary' bsSize='large'>hi</Button>
+      <h1 class="logo-text">Food Fight</h1>
       <FoodQueryContext.Provider value={[
         foodQuery, setFoodQuery
       ]}>
@@ -67,7 +67,7 @@ const App = () => {
       <RecipeNameContext.Provider value={[
         recipeName, setRecipeName
       ]}>
-        <h1>Food with Friends</h1>
+        <NavBar/>
         {page === 'viewMatch' ? <ViewMatch/> : null }
         {page === 'fight' ? <Fight/> : null }
         {page === 'match' ? <Match/> : null }
@@ -86,6 +86,7 @@ const App = () => {
       </RecipeResultsContext.Provider>
       </FoodQueryContext.Provider>
     </div>
+
   )
 }
 

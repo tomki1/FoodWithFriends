@@ -1,6 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { TogglePageContext } from './App.jsx';
 import axios from 'axios';
+import { Button } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert';
+import Form from 'react-bootstrap/Form';
 
 const CreateSessionName = () => {
 
@@ -32,13 +35,27 @@ const CreateSessionName = () => {
   }
 
   return (
-    <div>
-      <h1>Choose Username</h1>
-      {error !== '' ? error : null}
+    <div class="d-flex justify-content-center">
+
+      <Form>
+      {error !== '' ? <Alert variant="warning">
+       {error}
+        </Alert> : null}
+        <Form.Group className="mb-3" controlId="formGroupEmail">
+          <h1>log in</h1>
+          <Form.Label>username:</Form.Label>
+          <Form.Control type="text" style={{ maxWidth: '300px' }} placeholder="enter username" onChange={(e)=>(setUsername(e.target.value))}/>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formGroupPassword">
+          <Form.Label>password:</Form.Label>
+          <Form.Control type="password" style={{ maxWidth: '300px' }} placeholder="Password" />
+        </Form.Group>
+        <Button variant="primary" size="sm" className="button" onClick={()=>{handleClick();}}>
+          submit
+      </Button>
+      </Form>
       <br></br>
-      username: <input name="name" onChange={(e)=>(setUsername(e.target.value))}/>
-      <br></br>
-      <button className="submitUsername" onClick={()=>{handleClick();}}>submit</button>
+
     </div>
   )
 }

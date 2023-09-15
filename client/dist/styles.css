@@ -1,3 +1,68 @@
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
 }
+
+.button {
+  background-color: #659157 !important;
+}
+
+.logo-text {
+  font-family: 'Pacifico', sans-serif;
+  color: #FFCAB1;
+}
+
+.user-recipe-list {
+  background-image:url(http://i.stack.imgur.com/UfzKa.jpg);
+  height: 664px;
+  width: 495px;
+  line-height: 29px;
+  padding-top: 136px;
+  padding-left: 120px;
+}
+
+.search {
+  background-color: #C1D7AE;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.link-1 {
+  background-color: #C1D7AE !important;
+}
+
+.link-2 {
+  background-color: #FFCAB1 !important;
+}
+
+.user-recipes {
+  background-color: #FFCAB1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.link-3 {
+  background-color: #ECDCB0 !important;
+}
+
+.feed {
+  background-color: #ECDCB0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.link-4 {
+  background-color: #8CC084 !important;
+}
+
+.match {
+  background-color: #8CC084;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+

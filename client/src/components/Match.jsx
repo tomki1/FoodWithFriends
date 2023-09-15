@@ -52,7 +52,7 @@ const Match = () => {
     setPage('fight');
   }
   return (
-    <div>
+    <div className="match">
       <button onClick={() => {
         setPage('home');
       }}>

@@ -32,7 +32,7 @@ const UserRecipes = () => {
 
   const [page, setPage] = useContext(TogglePageContext);
   return (
-    <div>
+    <div className="user-recipes">
       <button onClick={() => {
         setPage('home');
       }}>
@@ -51,9 +51,11 @@ const UserRecipes = () => {
       <h2>Your Saved Recipes</h2>
 
 
-      {userRecipeData.map((oneRecipe, index) => (
-          <ul key={index}>{oneRecipe.recipe_name}</ul>
-        ))}
+      <div class="user-recipe-list">
+        {userRecipeData.map((oneRecipe, index) => (
+            <ul key={index}>{oneRecipe.recipe_name}</ul>
+          ))}
+      </div>
 
     </div>
   )

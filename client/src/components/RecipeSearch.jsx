@@ -73,7 +73,7 @@ const RecipeSearch = () => {
     }, [tagTypes, isLoading]);
 
   return (
-    <div>
+    <div className="search">
       <button onClick={() => {
         setPage('userRecipes');
       }}>Your Saved Recipes</button>

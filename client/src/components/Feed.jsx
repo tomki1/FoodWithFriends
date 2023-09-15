@@ -63,7 +63,7 @@ const Feed = () => {
   }, [matchFeed]);
 
   return (
-    <div>
+    <div className="feed">
       <button onClick={() => {
         setPage('home');
       }}>
