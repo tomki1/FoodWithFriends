@@ -8,6 +8,10 @@ import Feed from './Feed.jsx';
 import Match from './Match.jsx';
 import Fight from './Fight.jsx';
 import ViewMatch from './ViewMatch.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import '../scss/main.scss'; // Import your SCSS styles
+import { Button } from 'react-bootstrap'
+
 
 export const FoodQueryContext = React.createContext();
 export const RecipeResultsContext = React.createContext();
@@ -22,7 +26,7 @@ const App = () => {
 
   const [foodQuery, setFoodQuery] = useState('');
   const [recipeResults, setRecipeResults] = useState([]);
-  const [page, setPage] = useState('feed');
+  const [page, setPage] = useState('createUsername');
   const [recipeIndex, setRecipeIndex] = useState(-1);
   const [recipeID, setRecipeID] = useState(-1);
   const [secondUser, setSecondUser] = useState(-1);
@@ -41,6 +45,7 @@ const App = () => {
 
   return (
     <div>
+      <Button bsStyle='primary' bsSize='large'>hi</Button>
       <FoodQueryContext.Provider value={[
         foodQuery, setFoodQuery
       ]}>
