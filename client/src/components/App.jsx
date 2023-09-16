@@ -8,6 +8,7 @@ import Feed from './Feed.jsx';
 import Match from './Match.jsx';
 import Fight from './Fight.jsx';
 import ViewMatch from './ViewMatch.jsx';
+import SavedFeedRecipe from './SavedFeedRecipe.jsx';
 import NavBar from './Nav.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import Container from 'react-bootstrap/Container';
@@ -78,6 +79,7 @@ const App = () => {
         {page === 'home' ? <RecipeSearch/> : null}
         {page === 'recipe' ? <Recipe/> : null }
         {page === 'welcome' ? <Welcome/> : null }
+        {page === 'savedFeedRecipe' ? <SavedFeedRecipe/> : null }
       </RecipeNameContext.Provider>
       </SecondUserContext.Provider>
       </RecipeIDContext.Provider>

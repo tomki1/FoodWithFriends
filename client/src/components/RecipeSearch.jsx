@@ -78,7 +78,7 @@ const RecipeSearch = () => {
     <div className="search">
       <Form>
         <input type='text' style={{marginBottom: "10px", marginRight: "10px"}} onChange={(e) => setFoodQuery(e.target.value)}></input>
-        <Button variant="outline-success" size="sm" onClick={() => getRecipes(foodQuery)}>Search Recipes</Button>
+        <Button variant="outline-secondary" size="sm" onClick={() => getRecipes(foodQuery)}>Search Recipes</Button>
       </Form>
       <TagTypeContext.Provider value={[
         tagTypes, setTagTypes

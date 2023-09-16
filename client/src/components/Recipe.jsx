@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { RecipeResultsContext, TogglePageContext, RecipeIndexContext } from './App.jsx';
 import axios from 'axios';
-
+import { Button } from 'react-bootstrap'
 
 const Recipe = () => {
 
@@ -39,15 +39,15 @@ const Recipe = () => {
 
   return (
     <div>
-      <button onClick={() => {
+      <Button className="recipe-button" variant="outline-secondary" size="sm" onClick={() => {
         setPage('home');
         setRecipeIndex(-1);
       }}>
-        back to recipe list
-      </button>
-      <button onClick={() => {addRecipe()}}>
-        select recipe
-      </button>
+        Back
+      </Button>
+      <Button className="recipe-button" variant="outline-secondary" size="sm" onClick={() => {addRecipe()}}>
+        Save Recipe
+      </Button>
       <h2>{recipeResults[recipeIndex]?.name}</h2>
       <img src={recipeResults[recipeIndex]?.thumbnail_url} alt={recipeResults[recipeIndex]?.name} style={{maxWidth:'500px', maxHeight:'400px'}}></img>
 

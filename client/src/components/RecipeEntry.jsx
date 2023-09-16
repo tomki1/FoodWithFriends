@@ -17,10 +17,6 @@ const RecipeEntry = ({ index }) => {
     setShow(true);
   }
 
-  // const toggleDetails = () => {
-  //   setShowDetails(!showDetails);
-  // };
-
   const scrollToTop = () => {
     window.scrollTo(0, 0);
 }
@@ -34,14 +30,14 @@ const RecipeEntry = ({ index }) => {
         <Modal.Header closeButton>
           <Modal.Title>{recipeResults[index]?.name}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <img src={recipeResults[index]?.thumbnail_url} alt={recipeResults[index]?.name} style={{ maxWidth: '200px', maxHeight: '200px' }} />
+        <Modal.Body style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <img src={recipeResults[index]?.thumbnail_url} alt={recipeResults[index]?.name} style={{ maxWidth: '200px', maxHeight: '200px', marginBottom: "10px"}} />
           {recipeResults[index].description ? (
             <p>{recipeResults[index].description}</p>
           ) : null}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="btn btn-outline-success" size="sm" onClick={() => {
+          <Button variant="btn btn-outline-secondary" size="sm" onClick={() => {
             setPage('recipe');
             setRecipeIndex(index);
             scrollToTop();

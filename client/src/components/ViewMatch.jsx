@@ -118,7 +118,7 @@ const ViewMatch = () => {
        {message}
         </Alert> : null}
       </div>
-      <Button variant="outline-success" onClick={() => createMatch()}>Create Match</Button>
+      <Button variant="outline-secondary" size="sm" onClick={() => createMatch()}>Create Match</Button>
       {isLoading ? null : (
         <div className="card-container">
           <div className="horizontal-card">
@@ -127,7 +127,7 @@ const ViewMatch = () => {
                 {matchData.username_1}
               </Card.Header>
               {matchData.imageData_1 ? (
-                <Card.Img variant="top" src={matchData.imageData_1} alt="Recipe" />
+                <Card.Img className="image-card" variant="top" src={matchData.imageData_1} alt="Recipe" />
               ) : (
                 <p>user hasn't uploaded an image</p>
               )}
@@ -142,9 +142,11 @@ const ViewMatch = () => {
                 {matchData.username_2}
               </Card.Header>
               {matchData.imageData_2 ? (
-                <Card.Img variant="top" src={matchData.imageData_2} alt="Recipe" />
+                <Card.Img className="image-card" variant="top" src={matchData.imageData_2} alt="Recipe" />
               ) : (
-                <p>user hasn't uploaded an image</p>
+                <div className="image-card">
+                  no image uploaded
+                </div>
               )}
               <Card.Body>
                 <Card.Title>{matchData.likes_2} likes</Card.Title>
@@ -156,7 +158,7 @@ const ViewMatch = () => {
       <div>
         <input type="file" onChange={handleImageChange} />
         {selectedImage && <img src={selectedImage} alt={sessionStorage.getItem('username')} />}
-        <Button variant="outline-success" size="sm" onClick={imageClickHandler}>
+        <Button variant="outline-secondary" size="sm" onClick={imageClickHandler}>
           Upload Photo
         </Button>
       </div>

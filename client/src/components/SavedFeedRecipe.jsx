@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeResultsContext, RecipeNameContext } from './App.jsx';
+import { TogglePageContext, RecipeIDContext, RecipeResultsContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
 import { Button } from 'react-bootstrap'
 
 
-const Fight = () => {
+const SavedFeedRecipe = () => {
 
   const [page, setPage] = useContext(TogglePageContext);
   const [recipeID, setRecipeID] = useContext(RecipeIDContext);
-  const [secondUser, setSecondUser] = useContext(SecondUserContext);
   const [recipeResults, setRecipeResults] = useContext(RecipeResultsContext);
   const [recipeName, setRecipeName] = useContext(RecipeNameContext);
 
@@ -22,7 +21,6 @@ const Fight = () => {
       responseType: 'json',
       params: {
         recipeID,
-        secondUser
       }
     }
       axios(options)
@@ -43,12 +41,7 @@ const Fight = () => {
       console.log('recipeResults has been updated:', recipeResults);
     }, [recipeResults]);
   return (
-    <div className="fight">
-      <Button variant="outline-secondary" size="sm" onClick={() => {
-        setPage('viewMatch');
-      }}>
-        View Match
-      </Button>
+    <div className="saved-feed-recipe">
       {isLoading ? null :
       <>
        <h2>{recipeResults?.name}</h2>
@@ -88,4 +81,4 @@ const Fight = () => {
   )
 }
 
-export default Fight;
+export default SavedFeedRecipe;

@@ -45,18 +45,23 @@ const Match = () => {
   }, []);
 
 
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  }
   const clickHandler = (recipe_id, second_user_id, recipe_name) => {
     setRecipeID(recipe_id);
     setSecondUser(second_user_id);
     setRecipeName(recipe_name);
     setPage('fight');
+    scrollToTop();
   }
+
   return (
     <div className="match">
       <table className="card-table centered-table" border="1px solid black">
         <tbody>
-          <tr style={{ height: '20px' }}>
-            <td style={{ fontFamily: 'Pacifico, sans-serif', fontSize:'30px', textAlign: 'center' }} colSpan={2}>Challenge</td>
+          <tr className="table-title" style={{ height: '20px'}}>
+            <td style={{ fontFamily: 'Pacifico, sans-serif', fontSize:'30px', textAlign: 'center'}} colSpan={2}>Challenge</td>
           </tr>
           <tr style={{ height: '2px' }}>
               <td colSpan={2}>

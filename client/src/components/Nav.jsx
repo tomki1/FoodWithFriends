@@ -17,7 +17,7 @@ function NavBar() {
         <Nav.Link eventKey="link-3" onClick={()=>setPage('feed')}>Food Feed</Nav.Link>
       </Nav.Item>
       <Nav.Item className="link-4">
-        <Nav.Link eventKey="link-4" onClick={()=>setPage('match')}>Food Fight</Nav.Link>
+        <Nav.Link eventKey="link-4" onClick={()=>setPage('match')}>Challenge</Nav.Link>
       </Nav.Item>
     </Nav>
   );
