@@ -33,30 +33,30 @@ const UserRecipes = () => {
   const [page, setPage] = useContext(TogglePageContext);
   return (
     <div className="user-recipes">
-      <button onClick={() => {
-        setPage('home');
-      }}>
-        Search
-      </button>
-      <button onClick={() => {
-        setPage('feed');
-      }}>
-        Feed
-      </button>
-      <button onClick={() => {
-        setPage('match');
-      }}>
-        Food Fight
-      </button>
-      <h2>Your Saved Recipes</h2>
-
-
-      <div class="user-recipe-list">
-        {userRecipeData.map((oneRecipe, index) => (
-            <ul key={index}>{oneRecipe.recipe_name}</ul>
+      <table className="card-table centered-table" border="1px solid black">
+        <tbody>
+        <tr style={{ height: '20px'}}>
+          <td style={{fontFamily: 'Pacifico, sans-serif', fontSize:'30px', textAlign: 'center' }}width="500px">Saved Recipes</td>
+        </tr>
+        <tr style={{ height: '2px' }}>
+          <td width="500px">
+            <hr style={{ padding: '0px', margin: '0px' }} />
+          </td>
+        </tr>
+          {userRecipeData.map((oneRecipe, index) => (
+            <React.Fragment key={index}>
+              <tr style={{ height: '20px' }}>
+                <td width="500px">{oneRecipe.recipe_name}</td>
+              </tr>
+              <tr style={{ height: '2px' }}>
+                <td width="500px">
+                  <hr style={{ padding: '0px', margin: '0px' }} />
+                </td>
+              </tr>
+            </React.Fragment>
           ))}
-      </div>
-
+        </tbody>
+      </table>
     </div>
   )
 }

@@ -50,7 +50,7 @@ const CreateSessionName = () => {
           <Form.Label>password:</Form.Label>
           <Form.Control type="password" style={{ maxWidth: '300px' }} placeholder="Password" />
         </Form.Group>
-        <Button variant="primary" size="sm" className="button" onClick={()=>{handleClick();}}>
+        <Button variant="success" size="sm" onClick={()=>{handleClick();}}>
           submit
       </Button>
       </Form>

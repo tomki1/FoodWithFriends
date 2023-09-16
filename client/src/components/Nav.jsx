@@ -7,17 +7,17 @@ function NavBar() {
   const [page, setPage] = useContext(TogglePageContext);
   return (
     <Nav justify variant="tabs" defaultActiveKey="/home">
-      <Nav.Item>
-        <Nav.Link className="link-1" eventKey="link-1" onClick={()=>setPage('home')}>Search</Nav.Link>
+      <Nav.Item className="link-1" >
+        <Nav.Link eventKey="link-1" onClick={()=>setPage('home')}>Search</Nav.Link>
       </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="link-2" eventKey="link-2" onClick={()=>setPage('userRecipes')}>Saved Recipes</Nav.Link>
+      <Nav.Item className="link-2" >
+        <Nav.Link eventKey="link-2" onClick={()=>setPage('userRecipes')}>Saved Recipes</Nav.Link>
       </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="link-3" eventKey="link-3"onClick={()=>setPage('feed')}>Food Feed</Nav.Link>
+      <Nav.Item className="link-3" >
+        <Nav.Link eventKey="link-3" onClick={()=>setPage('feed')}>Food Feed</Nav.Link>
       </Nav.Item>
-      <Nav.Item>
-        <Nav.Link className="link-4" eventKey="link-4"onClick={()=>setPage('match')}>Match</Nav.Link>
+      <Nav.Item className="link-4">
+        <Nav.Link eventKey="link-4" onClick={()=>setPage('match')}>Food Fight</Nav.Link>
       </Nav.Item>
     </Nav>
   );

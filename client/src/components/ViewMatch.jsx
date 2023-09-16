@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeResultsContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
-
-const cellStyle = {
-  border: '1px solid black',
-  padding: '5px',
-};
-const headerCellStyle = {
-  border: '1px solid black',
-  padding: '5px',
-  fontWeight: 'bold',
-};
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Alert from 'react-bootstrap/Alert';
 
 const ViewMatch = () => {
 
@@ -119,70 +112,54 @@ const ViewMatch = () => {
 
   return (
     <div>
-      <button onClick={() => {
-        setPage('home');
-      }}>
-        Search
-      </button>
-      <button onClick={() => {
-        setPage('feed');
-      }}>
-        Feed
-      </button>
-      <button onClick={() => {
-        setPage('userRecipes');
-      }}>
-        Your Saved Recipes
-        </button>
-      <button onClick={() => {
-        setPage('match');
-      }}>
-        Food Fight
-      </button>
-
-      <h2>Match</h2>
-      {message}
-      <button onClick={() => {
-        createMatch();
-
-      }}>
-        Create Match
-      </button>
-
-      {isLoading ? null :
-      <>
-         <table>
-      <thead>
-        <tr>
-          <th style={headerCellStyle}>Recipe Name</th>
-          <th style={headerCellStyle}>{matchData?.username_1}</th>
-          <th style={headerCellStyle}>{matchData?.username_2}</th>
-          <th style={headerCellStyle}>Likes for {matchData?.username_1}</th>
-          <th style={headerCellStyle}>likes for {matchData?.username_2}</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr>
-              <td style={cellStyle}>{recipeName}</td>
-              <td style={cellStyle}>
-                {matchData.imageData_1 ? <img src={matchData.imageData_1} alt="Recipe" /> : <p>nothing here yet</p>}
-              </td>
-              <td style={cellStyle}>
-                {matchData.imageData_2 ? <img src={matchData.imageData_2} alt="Recipe" /> : <p>nothing here yet</p>}
-              </td>
-              <td style={cellStyle}>{matchData?.likes_1}</td>
-              <td style={cellStyle}>{matchData?.likes_2}</td>
-            </tr>
-        </tbody>
-      </table>
-
+      <h2>{recipeName}</h2>
       <div>
-      <input type="file" onChange={handleImageChange} />
-      {selectedImage && <img src={selectedImage} alt={sessionStorage.getItem('username')} />}
-      <button onClick={imageClickHandler}>Upload Image</button>
-    </div>
-      </>}
-
+      {message !== '' ? <Alert variant="warning">
+       {message}
+        </Alert> : null}
+      </div>
+      <Button variant="outline-success" onClick={() => createMatch()}>Create Match</Button>
+      {isLoading ? null : (
+        <div className="card-container">
+          <div className="horizontal-card">
+            <Card style={{ width: '18rem' }}>
+              <Card.Header className="card-header-1" as="h5">
+                {matchData.username_1}
+              </Card.Header>
+              {matchData.imageData_1 ? (
+                <Card.Img variant="top" src={matchData.imageData_1} alt="Recipe" />
+              ) : (
+                <p>user hasn't uploaded an image</p>
+              )}
+              <Card.Body>
+                <Card.Title>{matchData.likes_1} likes</Card.Title>
+              </Card.Body>
+            </Card>
+          </div>
+          <div className="horizontal-card">
+            <Card style={{ width: '18rem' }}>
+              <Card.Header className="card-header-2" as="h5">
+                {matchData.username_2}
+              </Card.Header>
+              {matchData.imageData_2 ? (
+                <Card.Img variant="top" src={matchData.imageData_2} alt="Recipe" />
+              ) : (
+                <p>user hasn't uploaded an image</p>
+              )}
+              <Card.Body>
+                <Card.Title>{matchData.likes_2} likes</Card.Title>
+              </Card.Body>
+            </Card>
+          </div>
+        </div>
+      )}
+      <div>
+        <input type="file" onChange={handleImageChange} />
+        {selectedImage && <img src={selectedImage} alt={sessionStorage.getItem('username')} />}
+        <Button variant="outline-success" size="sm" onClick={imageClickHandler}>
+          Upload Photo
+        </Button>
+      </div>
     </div>
   )
 }

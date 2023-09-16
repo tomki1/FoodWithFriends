@@ -1,6 +1,16 @@
-body {
+body, html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-left:1%;
+  margin-right:1%;
+  margin-bottom:1%;
+  margin-top:1%;
+  width:98%;
+  height:98%;
 
+
+}
+* {
+  color: #474448;
 }
 
 .button {
@@ -10,6 +20,9 @@ body {
 .logo-text {
   font-family: 'Pacifico', sans-serif;
   color: #FFCAB1;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .user-recipe-list {
@@ -21,13 +34,6 @@ body {
   padding-left: 120px;
 }
 
-.search {
-  background-color: #C1D7AE;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-
 .link-1 {
   background-color: #C1D7AE !important;
 }
@@ -36,33 +42,108 @@ body {
   background-color: #FFCAB1 !important;
 }
 
-.user-recipes {
-  background-color: #FFCAB1;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-}
-
 .link-3 {
   background-color: #ECDCB0 !important;
-}
-
-.feed {
-  background-color: #ECDCB0;
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  color: #474448;
 }
 
 .link-4 {
   background-color: #8CC084 !important;
 }
+.nav-link {
+  color: #474448 !important;
+}
 
-.match {
-  background-color: #8CC084;
+.feed {
+  background-color: white;
   height: 100%;
   width: 100%;
   position: absolute;
+  padding: 20px;
 }
 
 
+.search {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 20px;
+}
+
+
+
+.user-recipes {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 20px;
+  justify-content: center;
+}
+
+
+.match {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 20px;
+}
+
+.fight {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  padding: 20px;
+}
+.card-header-1 {
+  background-color: #C1D7AE !important;
+}
+.card-header-2 {
+  background-color: #FFCAB1 !important;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.horizontal-card {
+  width: 18rem;
+  margin: 10px;
+}
+
+.horizontal-card .card {
+  border: 2px solid #ECDCB0;
+  margin: 10px;
+}
+
+.horizontal-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card-table tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #ECDCB0;
+  cursor: pointer;
+}
+
+
+.table-row {
+  width: 50px;
+}
+
+.centered-table {
+  margin: 0 auto;
+  width: 50%;
+
+}
+
+.recipe-search-results {
+  margin-top: 20px;
+}

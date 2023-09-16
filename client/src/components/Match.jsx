@@ -53,43 +53,30 @@ const Match = () => {
   }
   return (
     <div className="match">
-      <button onClick={() => {
-        setPage('home');
-      }}>
-        Search
-      </button>
-      <button onClick={() => {
-        setPage('feed');
-      }}>
-        Feed
-      </button>
-      <button onClick={() => {
-        setPage('userRecipes');
-      }}>
-        Your Saved Recipes
-      </button>
-      <h2>Food Fight</h2>
-      <table>
-      <thead>
-        <tr>
-          <th style={headerCellStyle}>Friend</th>
-          <th style={headerCellStyle}>Recipe</th>
-          <th style={headerCellStyle}>Fight</th>
-        </tr>
-        </thead>
+      <table className="card-table centered-table" border="1px solid black">
         <tbody>
-          {userMatches.map((match, index) => (
-            <tr key={index}>
-              <td style={cellStyle}>{match.user2_username}</td>
-              <td style={cellStyle}>{match.recipe_name}</td>
-              <td style={cellStyle}>
-                <button onClick={() => {
-                  clickHandler(match.recipe_id, match.user2_username, match.recipe_name);
-                  }}>
-                  Fight
-                </button>
+          <tr style={{ height: '20px' }}>
+            <td style={{ fontFamily: 'Pacifico, sans-serif', fontSize:'30px', textAlign: 'center' }} colSpan={2}>Challenge</td>
+          </tr>
+          <tr style={{ height: '2px' }}>
+              <td colSpan={2}>
+                <hr style={{ padding: '0px', margin: '0px' }} />
               </td>
             </tr>
+          {userMatches.map((match, index) => (
+            <React.Fragment key={index}>
+              <tr style={{ height: '20px' }} onClick={() => {
+                  clickHandler(match.recipe_id, match.user2_username, match.recipe_name);
+                  }}>
+                <td width="100px" style={{paddingLeft: '20px'}}>{match.user2_username}</td>
+                <td width="500px" style={{textAlign: 'right', paddingRight: '20px'}}>{match.recipe_name}</td>
+              </tr>
+              <tr style={{ height: '2px' }}>
+                <td colSpan={2}>
+                  <hr style={{ padding: '0px', margin: '0px', width: '100%' }} />
+                </td>
+              </tr>
+            </React.Fragment>
           ))}
         </tbody>
       </table>

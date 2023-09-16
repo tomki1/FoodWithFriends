@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { TogglePageContext, RecipeIDContext, SecondUserContext, RecipeResultsContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
-
+import { Button } from 'react-bootstrap'
 
 
 const Fight = () => {
@@ -43,34 +43,12 @@ const Fight = () => {
       console.log('recipeResults has been updated:', recipeResults);
     }, [recipeResults]);
   return (
-    <div>
-      <button onClick={() => {
-        setPage('home');
-      }}>
-        Search
-      </button>
-      <button onClick={() => {
-        setPage('feed');
-      }}>
-        Feed
-      </button>
-      <button onClick={() => {
-        setPage('userRecipes');
-      }}>
-        Your Saved Recipes
-      </button>
-      <button onClick={() => {
-        setPage('match');
-      }}>
-        Food Fight
-      </button>
-      <h2>Get Cooking!</h2>
-
-      <button onClick={() => {
+    <div className="fight">
+      <Button variant="outline-success" size="sm"onClick={() => {
         setPage('viewMatch');
       }}>
         View Match
-      </button>
+      </Button>
       {isLoading ? null :
       <>
        <h2>{recipeResults?.name}</h2>

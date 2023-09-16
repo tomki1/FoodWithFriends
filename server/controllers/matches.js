@@ -95,7 +95,7 @@ module.exports = {
   async getAll(req, res) {
 
     try {
-      const result = await pool.query('SELECT m.id as id, m.recipe_name as recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, m.likes_1 AS likes_1, m.likes_2 AS likes_2, m.recipe_id as recipe_id, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id ORDER BY created_at DESC');
+      const result = await pool.query('SELECT m.id as id, m.recipe_name as recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, m.likes_1 AS likes_1, m.likes_2 AS likes_2, m.recipe_id as recipe_id, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id WHERE m.user_1_photo IS NOT NULL AND m.user_2_photo IS NOT NULL ORDER BY created_at DESC');
       // const imageBase64_1 = result.rows[0]?.user_1_photo;
       // const imageBase64_2 = result.rows[0]?.user_2_photo;
       // const username_1 = result.rows[0]?.username_1;
@@ -193,7 +193,7 @@ module.exports = {
          await pool.query('UPDATE match SET likes_2 = $1 WHERE id = $2 AND user_1_id = $3 AND user_2_id = $4', [likeCol+1, matchID, user_id_1, user_id_2]);
       }
 
-      const result = await pool.query('SELECT m.id as id, m.recipe_name as recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, m.likes_1 AS likes_1, m.likes_2 AS likes_2, m.recipe_id as recipe_id, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id ORDER BY created_at DESC');
+      const result = await pool.query('SELECT m.id as id, m.recipe_name as recipe_name, m.user_1_photo as user_1_photo, m.user_2_photo AS user_2_photo, m.likes_1 AS likes_1, m.likes_2 AS likes_2, m.recipe_id as recipe_id, u1.username AS username_1, u2.username as username_2 FROM match m INNER JOIN users u1 ON m.user_1_id = u1.id INNER JOIN users u2 ON m.user_2_id = u2.id WHERE m.user_1_photo IS NOT NULL AND m.user_2_photo IS NOT NULL ORDER BY created_at DESC');
         res.status(200).send(result.rows);
     } catch (error) {
       console.error('Error:', error);

@@ -3,6 +3,8 @@ import { FoodQueryContext, RecipeResultsContext, TogglePageContext } from './App
 import axios from 'axios';
 import RecipeResults from './RecipeResults.jsx';
 import TypeDropdown from './TypeDropdown.jsx';
+import { Button } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form';
 
 export const TagTypeContext = React.createContext();
 export const SelectedTypeContext = React.createContext();
@@ -74,23 +76,10 @@ const RecipeSearch = () => {
 
   return (
     <div className="search">
-      <button onClick={() => {
-        setPage('userRecipes');
-      }}>Your Saved Recipes</button>
-      <button onClick={() => {
-        setPage('feed');
-      }}>
-        Feed
-      </button>
-      <button onClick={() => {
-        setPage('match');
-      }}>
-        Food Fight
-      </button>
-      <h2>Search for Recipe</h2>
-      <input type='text' onChange={(e) => setFoodQuery(e.target.value)}></input>
-      <button onClick={() => getRecipes(foodQuery)}>Search Recipes</button>
-
+      <Form>
+        <input type='text' style={{marginBottom: "10px", marginRight: "10px"}} onChange={(e) => setFoodQuery(e.target.value)}></input>
+        <Button variant="outline-success" size="sm" onClick={() => getRecipes(foodQuery)}>Search Recipes</Button>
+      </Form>
       <TagTypeContext.Provider value={[
         tagTypes, setTagTypes
       ]}>
