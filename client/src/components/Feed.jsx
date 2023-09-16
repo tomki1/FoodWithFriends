@@ -78,7 +78,7 @@ const Feed = () => {
                   </Card.Header>
                   { feedItem.user_1_photo ?
                     <Card.Img className="image-card" variant="top" src={feedItem.user_1_photo} alt="Recipe" />
-                  : <p>user hasn't uploaded image</p>
+                  : <p>no image uploaded</p>
                   }
                   <Card.Body>
                     <Card.Title>{feedItem.username_1}</Card.Title>
@@ -110,7 +110,7 @@ const Feed = () => {
                   </Card.Header>
                   { feedItem.user_1_photo ?
                     <Card.Img className="image-card" variant="top" src={feedItem.user_2_photo} alt="Recipe" />
-                  : <p>user hasn't uploaded image</p>
+                  : <p>no image uploaded</p>
                   }
                   <Card.Body>
                     <Card.Title>{feedItem.username_2}</Card.Title>
