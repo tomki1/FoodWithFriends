@@ -1,22 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { TogglePageContext } from './App.jsx';
+import { TogglePageContext, RecipeIDContext, RecipeNameContext } from './App.jsx';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
 const Feed = () => {
 
-  const cellStyle = {
-    border: '1px solid black',
-    padding: '5px',
-  };
-  const headerCellStyle = {
-    border: '1px solid black',
-    padding: '5px',
-    fontWeight: 'bold',
-  };
-
-
   const [page, setPage] = useContext(TogglePageContext);
   const [matchFeed, setMatchFeed] = useState([]);
+  const [recipeID, setRecipeID] = useContext(RecipeIDContext);
+  const [recipeName, setRecipeName] = useContext(RecipeNameContext);
 
   const getFeedData = () => {
     const options = {
@@ -31,6 +24,10 @@ const Feed = () => {
       .catch((error) => console.log('Error', error.message));
 
 
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
   }
 
   const handleLikeClick = (matchID, userLiked, userNotLiked, likeCol) => {
@@ -53,6 +50,13 @@ const Feed = () => {
 
   }
 
+  const clickHandler = (recipe_id, recipe_name) => {
+    setRecipeID(recipe_id);
+    setRecipeName(recipe_name);
+    setPage('savedFeedRecipe');
+    scrollToTop();
+  }
+
   useEffect(() => {
     getFeedData();
     console.log('matchFeed has been updated:', matchFeed);
@@ -63,73 +67,77 @@ const Feed = () => {
   }, [matchFeed]);
 
   return (
-    <div>
-      <button onClick={() => {
-        setPage('home');
-      }}>
-        Search
-      </button>
-      <button onClick={() => {
-        setPage('userRecipes');
-      }}>
-        Your Saved Recipes
-      </button>
-      <button onClick={() => {
-        setPage('match');
-      }}>
-        Food Fight
-      </button>
-      <h2>Food Feed</h2>
+    <div className="feed">
+      <div className="card-container">
+        {matchFeed.length > 0 &&
+          matchFeed.map((feedItem, index) => (
+            <div key={index} className="horizontal-card">
+                <Card style={{ width: '18rem' }}>
+                  <Card.Header className="card-header-1" as="h5">
+                    {feedItem.recipe_name}
+                  </Card.Header>
+                  { feedItem.user_1_photo ?
+                    <Card.Img className="image-card" variant="top" src={feedItem.user_1_photo} alt="Recipe" />
+                  : <p>user hasn't uploaded image</p>
+                  }
+                  <Card.Body>
+                    <Card.Title>{feedItem.username_1}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{feedItem.likes_1} likes</Card.Subtitle>
+                    <div className="card-button-container">
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => {
+                          handleLikeClick(feedItem.id, feedItem.username_1, feedItem.username_2, feedItem.likes_1);
+                        }}>
+                        like
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => {
+                          clickHandler(feedItem.recipe_id, feedItem.recipe_name);
+                        }}>
+                        view recipe
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
 
-      <table>
-      <thead>
-        <tr>
-        <th style={headerCellStyle}>id</th>
-        <th style={headerCellStyle}>Recipe Name</th>
-        <th style={headerCellStyle}>Friend 1</th>
-        <th style={headerCellStyle}>Friend 2</th>
-        <th style={headerCellStyle}>Food Image 1</th>
-        <th style={headerCellStyle}>Food Image 2</th>
-        <th style={headerCellStyle}>Likes 1</th>
-        <th style={headerCellStyle}>Likes 2</th>
-        <th style={headerCellStyle}>Like Button 1</th>
-        <th style={headerCellStyle}>Like Button 2</th>
-        </tr>
-        </thead>
-        <tbody>
-          {matchFeed.length > 0 && matchFeed.map((feedItem, index) => (
-            <tr key={index}>
-              <td style={cellStyle}>{feedItem.id}</td>
-              <td style={cellStyle}>{feedItem.recipe_name}</td>
-              <td style={cellStyle}>{feedItem.username_1}</td>
-              <td style={cellStyle}>{feedItem.username_2}</td>
-              <td style={cellStyle}>
-                {feedItem.user_1_photo ? <img src={feedItem.user_1_photo} alt="Recipe" /> : <p>nothing here yet</p>}
-              </td>
-              <td style={cellStyle}>
-                {feedItem.user_2_photo ? <img src={feedItem.user_2_photo} alt="Recipe" /> : <p>nothing here yet</p>}
-              </td>
-              <td style={cellStyle}>{feedItem.likes_1}</td>
-              <td style={cellStyle}>{feedItem.likes_2}</td>
-              <td style={cellStyle}>
-                <button onClick={() => {
-                  handleLikeClick(feedItem.id, feedItem.username_1, feedItem.username_2, feedItem.likes_1);
-                }}>
-                    Like Food 1
-                </button></td>
-              <td style={cellStyle}>
-                <button onClick={() => {
-                  handleLikeClick(feedItem.id, feedItem.username_2, feedItem.username_1, feedItem.likes_2);
-                  }}>
-                    Like Food 2
-                  </button></td>
-            </tr>
+                <Card style={{ width: '18rem' }}>
+                  <Card.Header className="card-header-2" as="h5">
+                    {feedItem.recipe_name}
+                  </Card.Header>
+                  { feedItem.user_1_photo ?
+                    <Card.Img className="image-card" variant="top" src={feedItem.user_2_photo} alt="Recipe" />
+                  : <p>user hasn't uploaded image</p>
+                  }
+                  <Card.Body>
+                    <Card.Title>{feedItem.username_2}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{feedItem.likes_2} likes</Card.Subtitle>
+                    <div className="card-button-container">
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => {
+                          handleLikeClick(feedItem.id, feedItem.username_2, feedItem.username_1, feedItem.likes_2);
+                        }}>
+                        like
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => {
+                          clickHandler(feedItem.recipe_id, feedItem.recipe_name);
+                        }}>
+                        view recipe
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+            </div>
           ))}
-        </tbody>
-      </table>
-
-
-
+      </div>
     </div>
   )
 }

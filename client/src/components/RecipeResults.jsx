@@ -16,14 +16,35 @@ const RecipeResults = () => {
   }, [recipeResults]);
 
   return (
-    <div>
-      <h2>Recipe Results</h2>
-      {recipeResults.length > 0
-      ? recipeResults.map((recipe, index) => (
-        <RecipeEntry key={index} index={index}/>
-        ))
-      : null}
+    <div className="recipe-search-results">
 
+      <table className="card-table centered-table" border="1px solid black">
+        <tbody>
+          <tr className="table-title" style={{ height: '20px'}}>
+            <td style={{fontFamily: 'Pacifico, sans-serif', fontSize:'30px', textAlign: 'center' }}width="500px">Recipes</td>
+          </tr>
+          <tr style={{ height: '2px' }}>
+            <td width="500px">
+              <hr style={{ padding: '0px', margin: '0px' }} />
+            </td>
+          </tr>
+        {recipeResults.length > 0
+        ?
+        recipeResults.map((recipe, index) => (
+          <>
+            <tr style={{ height: '20px' }}>
+              <td width="500px">        <RecipeEntry key={index} index={index}/></td>
+            </tr>
+            <tr style={{ height: '2px' }}>
+              <td width="500px">
+                <hr style={{ padding: '0px', margin: '0px' }} />
+              </td>
+            </tr>
+          </>
+          ))
+        : null}
+        </tbody>
+      </table>
     </div>
   )
 }

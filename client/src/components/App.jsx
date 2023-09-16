@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import  RecipeSearch from './RecipeSearch.jsx';
 import  Recipe from './Recipe.jsx';
-import FriendList from './FriendList.jsx';
+import Welcome from './Welcome.jsx';
 import CreateSessionName from './CreateSessionName.jsx';
 import UserRecipes from './UserRecipes.jsx';
 import Feed from './Feed.jsx';
 import Match from './Match.jsx';
 import Fight from './Fight.jsx';
 import ViewMatch from './ViewMatch.jsx';
+import SavedFeedRecipe from './SavedFeedRecipe.jsx';
+import NavBar from './Nav.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '../scss/main.scss'; // Import your SCSS styles
-import { Button } from 'react-bootstrap'
+import Container from 'react-bootstrap/Container';
 
 
 export const FoodQueryContext = React.createContext();
@@ -26,7 +27,7 @@ const App = () => {
 
   const [foodQuery, setFoodQuery] = useState('');
   const [recipeResults, setRecipeResults] = useState([]);
-  const [page, setPage] = useState('createUsername');
+  const [page, setPage] = useState('feed');
   const [recipeIndex, setRecipeIndex] = useState(-1);
   const [recipeID, setRecipeID] = useState(-1);
   const [secondUser, setSecondUser] = useState(-1);
@@ -38,14 +39,15 @@ const App = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem('username') === null) {
-      setPage('createUsername');
+      sessionStorage.setItem('username', 'sam'); // for testing
+      // setPage('createUsername');
     }
   }, [page]);
 
 
   return (
     <div>
-      <Button bsStyle='primary' bsSize='large'>hi</Button>
+      <h1 class="logo-text" onClick={()=>setPage('welcome')}>RecipeCards.</h1>
       <FoodQueryContext.Provider value={[
         foodQuery, setFoodQuery
       ]}>
@@ -67,17 +69,17 @@ const App = () => {
       <RecipeNameContext.Provider value={[
         recipeName, setRecipeName
       ]}>
-        <h1>Food with Friends</h1>
+        <NavBar/>
         {page === 'viewMatch' ? <ViewMatch/> : null }
         {page === 'fight' ? <Fight/> : null }
         {page === 'match' ? <Match/> : null }
         {page === 'userRecipes' ? <UserRecipes/> : null }
         {page === 'feed' ? <Feed/> : null }
         {page === 'createUsername' ? <CreateSessionName/> : null }
-        {page === 'home' ? <RecipeSearch/> : null }
-
+        {page === 'home' ? <RecipeSearch/> : null}
         {page === 'recipe' ? <Recipe/> : null }
-        {/* <FriendList/> */}
+        {page === 'welcome' ? <Welcome/> : null }
+        {page === 'savedFeedRecipe' ? <SavedFeedRecipe/> : null }
       </RecipeNameContext.Provider>
       </SecondUserContext.Provider>
       </RecipeIDContext.Provider>
@@ -86,6 +88,7 @@ const App = () => {
       </RecipeResultsContext.Provider>
       </FoodQueryContext.Provider>
     </div>
+
   )
 }
 

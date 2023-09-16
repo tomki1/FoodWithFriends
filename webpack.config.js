@@ -28,6 +28,18 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images', // Specify the output path for images
+              name: '[name].[ext]', // Keep the original file name and extension
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
