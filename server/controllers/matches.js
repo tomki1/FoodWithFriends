@@ -43,7 +43,7 @@ module.exports = {
       const insertResult = await pool.query('INSERT INTO match (recipe_id, recipe_name, user_1_id, user_2_id) VALUES ($1, $2, $3, $4)', [recipe_id, recipe_name, user_id_1, user_id_2]);
 
       console.log('match inserted');
-      return res.status(201).json({ message: 'match inserted' });
+      return res.status(201).json({ message: 'Match created. Get cooking!' });
     } catch (error) {
       console.error('Error:', error);
       return res.status(500).json({ message: 'Error' });

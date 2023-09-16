@@ -74,23 +74,23 @@ module.exports = {
     });
   },
   async getRecipe(req, res) {
-  //   const options = {
-  //     method: 'GET',
-  //     url: 'https://tasty.p.rapidapi.com/recipes/get-more-info',
-  //     params: {id: `${req.query.recipeID}`},
-  //     headers: {
-  //       'X-RapidAPI-Key': `${process.env.TOKEN}`,
-  //       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
-  //     }
-  //   };
-  //  axios(options)
-  //   .then((response) => {
-  //     res.send(response.data);
-  //   })
-  //   .catch ((error) => {
-  //     console.error(error);
-  //   });
-
+    const options = {
+      method: 'GET',
+      url: 'https://tasty.p.rapidapi.com/recipes/get-more-info',
+      params: {id: `${req.query.recipeID}`},
+      headers: {
+        'X-RapidAPI-Key': `${process.env.TOKEN}`,
+        'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+      }
+    };
+   axios(options)
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch ((error) => {
+      console.error(error);
+    });
+/*
   res.send({
     "servings_noun_plural": "servings",
     "thumbnail_url": "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/video-api/assets/199808.jpg",
@@ -1116,33 +1116,31 @@ module.exports = {
       "score": 0.940141
     }
   });
-
-
-
+*/
   },
   async getRecipes(req, res) {
-  //   const options = {
-  //     method: 'GET',
-  //     url: 'https://tasty.p.rapidapi.com/recipes/list',
-  //     params: {
-  //       from: '0',
-  //       size: '20',
-  //       tags: `${req.query.selectedTag}`,
-  //       q: `${req.query.foodName}`
-  //     },
-  //     headers: {
-  //       'X-RapidAPI-Key': `${process.env.TOKEN}`,
-  //       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
-  //     }
-  //   };
-  //  axios(options)
-  //   .then((response) => {
-  //     res.send(response.data);
-  //   })
-  //   .catch ((error) => {
-  //     console.error(error);
-  //   });
-
+    const options = {
+      method: 'GET',
+      url: 'https://tasty.p.rapidapi.com/recipes/list',
+      params: {
+        from: '0',
+        size: '20',
+        tags: `${req.query.selectedTag}`,
+        q: `${req.query.foodName}`
+      },
+      headers: {
+        'X-RapidAPI-Key': `${process.env.TOKEN}`,
+        'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
+      }
+    };
+   axios(options)
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch ((error) => {
+      console.error(error);
+    });
+/*
   res.send({
     "count": 1266,
     "results": [
@@ -12802,6 +12800,7 @@ module.exports = {
       }
     ]
   })
+  */
   }
 }
 

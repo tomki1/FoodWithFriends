@@ -129,7 +129,9 @@ const ViewMatch = () => {
               {matchData.imageData_1 ? (
                 <Card.Img className="image-card" variant="top" src={matchData.imageData_1} alt="Recipe" />
               ) : (
-                <p>user hasn't uploaded an image</p>
+                <div className="image-card">
+                  no image uploaded
+                </div>
               )}
               <Card.Body>
                 <Card.Title>{matchData.likes_1} likes</Card.Title>

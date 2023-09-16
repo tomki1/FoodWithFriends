@@ -39,8 +39,7 @@ const App = () => {
 
   useEffect(() => {
     if (sessionStorage.getItem('username') === null) {
-      sessionStorage.setItem('username', 'sam'); // for testing
-      // setPage('createUsername');
+      setPage('createUsername');
     }
   }, [page]);
 
